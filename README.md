@@ -1,7 +1,7 @@
 # OPB-Turisticna_agencija
 Projekt pri predmetu Osnove podatkovnih baz 
 
-
+---
 dodam samo ideje:
 
 *Stranka*
