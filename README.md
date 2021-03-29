@@ -20,6 +20,7 @@ dodam samo ideje:
 - ime
 - država
 - opis
+(mogoče mesta sploh ne rabiva in je država že čisto dovolj - opis dobi potem država)
 
 ---
 *Način transporta*
