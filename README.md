@@ -21,8 +21,18 @@ dodam samo ideje:
 - država
 - opis
 
+---
 *Način transporta*
 letalo, ladja, avtobus, vlak... (to še ne vem, kako bi implementiral...)
+
+Implementaci: začetna država, končna država, način, ...
+kjer so zač. in kon. država referenci na države ter način referenca na način transporta.
+
+(dodatni stolpci)
+- čas potovanja
+- cena
+
+---
 
 *Izlet*
 - id
