@@ -2,50 +2,68 @@
 Projekt pri predmetu Osnove podatkovnih baz 
 
 ---
-dodam samo ideje:
+Legenda: **Ključ**, REFERENCA(NaToTabelo)
 
-*Stranka*
-- emšo ali pa id
-- ime
-- priimek
-- državljanstvo
+## Države
+|**Država**| Opis |
+|----------|-----|
+|Slovenija| Slovenija, od kod lepote tvoje.|
+|Avstrija|  Tam se je rodil Mozart.|
+|Madžarska| Bila je nekoč del Avstro-Ogrske.|
+|Italija| Radi jedo testenine. |
+|Hrvaška| Ponosni so na svoje morje.|
 
-*Države*
-- id (verjetno id ne potrebujeva)
-- ime
-- oddaljenost (neka absolutna dolžina od nekega izhodišča, če bi kdaj razdaljo med dvema državama računala)
+## Atrakcije
+|**Atrakcija**|
+|--|
+|Narava|
+|Šport|
+|Kultura|
+|Zabava|
+|Hrana|
 
-*Mesta*
-- id (verjetno id ne potrebujeva)
-- ime
-- država
-- opis
-(mogoče mesta sploh ne rabiva in je država že čisto dovolj - opis dobi potem država)
+## Atrakcije po državah
+| **DRŽAVA**(Države)|**ATRAKCIJE**(Atrakcije)|
+|---|---|
+|Slovenija|Narava|
+|Slovenija|Šport|
+|Avstrija|Kultura|
+|Italija|Hrana|
+|Madžarska|Zabava|
+|Hrvaška|Narava|
 
----
-*Način transporta*
-letalo, ladja, avtobus, vlak... (to še ne vem, kako bi implementiral...)
+## Prevoz
+|**Prevoz**|
+|---|
+|Avtobus|
+|Vlak|
+|Letalo|
+|Ladja|
 
-Implementacija: začetna država, končna država, način, ...
-kjer so zač. in kon. država referenci na države ter način referenca na način transporta.
+## Možni transporti
+|**DRŽAVA_ZAČETEK**(Države)|**DRŽAVA_KONEC**(Države)|**PREVOZ**(Prevoz)| Trajanje (v urah) | Cena (v evrih)|
+|--|--|--|--|--|
+|Slovenija|Hrvaška|Avtobus|2|12|
+|Slovenija|Hrvaška|Ladja|3|35|
+|Italija|Hrvaška|Ladja|3|40|
+|Avstrija|Madžarska|Vlak|1|20|
+|Hrvaška|Avstrija|Letalo|1|50|
 
-(dodatni stolpci)
-- čas potovanja
-- cena
+## Osebe
+|**Id**|Ime|Priimer|DRŽAVLJANSTVO (Države)|E-mail|Geslo|
+|--|--|--|--|--|--|
+|1|Anna|Anders|Avstrija|anna.anders@gmail.com|hCj!5h1A|
+|2|Bine|Brda|Slovenija|bine.brda@gmail.com|EggsAndBacon81|
+|3|Carponio|Caccamise|Italija|carponio.caccamise@gmail.com|Roma123|
 
----
+## Izlet
+|**Id**|OSEBA(Osebe)|DRŽAVA_ZAČETEK(Države)|DRŽAVA_KONEC(Države)|PREVOZ(Prevoz)|Datum|Ocena|
+|--|--|--|--|--|--|--|
+|1|2|Slovenija|Hrvaška|Ladja|1.8.2019|10|
+|2|1|Avstrija|Madžarska|Vlak|12.9.2019|10|
+|3|3|Italija|Hrvaška|Ladja|3.12.2019|10|
 
-*Izlet*
-- id
-- oseba
-- država
-- mesto
-- prevoz
-- cena (izračuna se mogoče iz razdalje in načina transporta)
-- datum
-- ocena (po tem ko si enkrat že bil tam, lahko oceniš)
 
-Spletna stran bi lahko imela kako *search* ali pa *priporočeno* možnost, kjer ti na podlagi opisa (recimo, da so kategorijo kot na primer: hrana, vreme, kultura, šport, narava) priporoča. Ali pa ti na primer predlaga na podlagi, kje si ti že bil, kam gredo drugi, ki so tam tudi že bili (primer, če si bil v $a$ in $b$, in nekdo je bil v $a$, $b$ in $c$, ti predlaga $c$).
 
 
 
