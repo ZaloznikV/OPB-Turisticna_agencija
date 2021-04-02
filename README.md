@@ -2,10 +2,10 @@
 Projekt pri predmetu Osnove podatkovnih baz 
 
 ---
-Legenda: **Ključ**, REFERENCA(NaToTabelo)
+Legenda: *Ključ*, REFERENCA(NaToTabelo), *OBOJE*
 
 ## Države
-|**Država**| Opis |
+|*Država*| Opis |
 |----------|-----|
 |Slovenija| Slovenija, od kod lepote tvoje.|
 |Avstrija|  Tam se je rodil Mozart.|
@@ -14,7 +14,7 @@ Legenda: **Ključ**, REFERENCA(NaToTabelo)
 |Hrvaška| Ponosni so na svoje morje.|
 
 ## Atrakcije
-|**Atrakcija**|
+|*Atrakcija*|
 |--|
 |Narava|
 |Šport|
@@ -23,7 +23,7 @@ Legenda: **Ključ**, REFERENCA(NaToTabelo)
 |Hrana|
 
 ## Atrakcije po državah
-| **DRŽAVA**(Države)|**ATRAKCIJE**(Atrakcije)|
+| *DRŽAVA*(Države) | *ATRAKCIJE*(Atrakcije)|
 |---|---|
 |Slovenija|Narava|
 |Slovenija|Šport|
@@ -33,7 +33,7 @@ Legenda: **Ključ**, REFERENCA(NaToTabelo)
 |Hrvaška|Narava|
 
 ## Prevoz
-|**Prevoz**|
+|*Prevoz*|
 |---|
 |Avtobus|
 |Vlak|
@@ -41,7 +41,7 @@ Legenda: **Ključ**, REFERENCA(NaToTabelo)
 |Ladja|
 
 ## Možni transporti
-|**DRŽAVA_ZAČETEK**(Države)|**DRŽAVA_KONEC**(Države)|**PREVOZ**(Prevoz)| Trajanje (v urah) | Cena (v evrih)|
+|*DRŽAVA_ZAČETEK*(Države)|*DRŽAVA_KONEC*(Države)|*PREVOZ*(Prevoz)| Trajanje (v urah) | Cena (v evrih)|
 |--|--|--|--|--|
 |Slovenija|Hrvaška|Avtobus|2|12|
 |Slovenija|Hrvaška|Ladja|3|35|
@@ -50,14 +50,14 @@ Legenda: **Ključ**, REFERENCA(NaToTabelo)
 |Hrvaška|Avstrija|Letalo|1|50|
 
 ## Osebe
-|**Id**|Ime|Priimer|DRŽAVLJANSTVO (Države)|E-mail|Geslo|
+|*Id*|Ime|Priimer|DRŽAVLJANSTVO (Države)|E-mail|Geslo|
 |--|--|--|--|--|--|
 |1|Anna|Anders|Avstrija|anna.anders@gmail.com|hCj!5h1A|
 |2|Bine|Brda|Slovenija|bine.brda@gmail.com|EggsAndBacon81|
 |3|Carponio|Caccamise|Italija|carponio.caccamise@gmail.com|Roma123|
 
 ## Izlet
-|**Id**|OSEBA(Osebe)|DRŽAVA_ZAČETEK(Države)|DRŽAVA_KONEC(Države)|PREVOZ(Prevoz)|Datum|Ocena|
+|*Id*|OSEBA(Osebe)|DRŽAVA_ZAČETEK(Države)|DRŽAVA_KONEC(Države)|PREVOZ(Prevoz)|Datum|Ocena|
 |--|--|--|--|--|--|--|
 |1|2|Slovenija|Hrvaška|Ladja|1.8.2019|10|
 |2|1|Avstrija|Madžarska|Vlak|12.9.2019|10|
