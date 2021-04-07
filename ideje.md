@@ -1,44 +1,10 @@
-dodam samo ideje:
+Ideja aplikacije:
 
-*Stranka*
-- emšo ali pa id
-- ime
-- priimek
-- državljanstvo
+Nov uporabnik se bo lahko prijavil v našo bazo, kjer bo moral napisati svojo ime, priimek, državlanstvo, mail in geslo.
+V tej aplikaciji si lahko poišče neko državo, kamor lahko potuje. Na voljo ima tudi različne možnosti transporta (odvisno od države). 
+Imel bo tudi možnost uporabljanja filtrov, če uporabnik ne bo vedel točno, v katero državo bi rad potoval, ve pa, kaj želi od potovanja.
+Hkrati pa bo imela aplikacija še oddelek "priporočeno", kjer bi na podlagi že obiskanih držav, aplikacija sama izbrala primerno državo.
+Po potovanju ima stranka tudi možnost oceniti potovanje.
 
-*Države*
-- id (verjetno id ne potrebujeva)
-- ime
-- oddaljenost (neka absolutna dolžina od nekega izhodišča, če bi kdaj razdaljo med dvema državama računala)
-
-*Mesta*
-- id (verjetno id ne potrebujeva)
-- ime
-- država
-- opis
-(mogoče mesta sploh ne rabiva in je država že čisto dovolj - opis dobi potem država)
-
----
-*Način transporta*
-letalo, ladja, avtobus, vlak... (to še ne vem, kako bi implementiral...)
-
-Implementacija: začetna država, končna država, način, ...
-kjer so zač. in kon. država referenci na države ter način referenca na način transporta.
-
-(dodatni stolpci)
-- čas potovanja
-- cena
-
----
-
-*Izlet*
-- id
-- oseba
-- država
-- mesto
-- prevoz
-- cena (izračuna se mogoče iz razdalje in načina transporta)
-- datum
-- ocena (po tem ko si enkrat že bil tam, lahko oceniš)
-
+(prejšnja ideja):
 Spletna stran bi lahko imela kako *search* ali pa *priporočeno* možnost, kjer ti na podlagi opisa (recimo, da so kategorijo kot na primer: hrana, vreme, kultura, šport, narava) priporoča. Ali pa ti na primer predlaga na podlagi, kje si ti že bil, kam gredo drugi, ki so tam tudi že bili (primer, če si bil v $a$ in $b$, in nekdo je bil v $a$, $b$ in $c$, ti predlaga $c$).
