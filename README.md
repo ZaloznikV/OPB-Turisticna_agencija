@@ -5,7 +5,6 @@ Projekt pri predmetu Osnove podatkovnih baz
 ER Diagram:
 
 ![ER Diagram](ERSkica.jpg)  
-[]: # (!!!!!!!!!!!!!!  TUKAJ POTEM DODAJ PRAVI DIAGRAM  !!!!!!!!!!!!!!!!!)
 
 
 ---
