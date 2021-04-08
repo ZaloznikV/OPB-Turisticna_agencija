@@ -73,4 +73,4 @@ Legenda: *Ključ*, REFERENCA(NaToTabelo), *OBOJE*
 
 
 
-
+Stran za odvzem podatkov: https://www.mockaroo.com/
