@@ -47,7 +47,7 @@ Legenda: *Ključ*, REFERENCA(NaToTabelo), *OBOJE*
 |4|Ladja|
 
 ## Možni transporti
-|*Id*|DRŽAVA_ZAČETEK(Države) (odhod)|DRŽAVA_KONEC(Države)|PREVOZ(Prevoz) (prihod)| Trajanje (v urah) | Cena (v evrih)| Ali je možno|
+|*Id*|DRŽAVA_ZAČETEK(Države) (odhod)|DRŽAVA_KONEC(Države)|PREVOZ(Prevoz) (prihod)| Trajanje (v urah) | Cena (v evrih)| na voljo|
 |--|--|--|--|--|--|--|
 |1|Slovenija|Hrvaška|Avtobus|2|12|true|
 |2|Slovenija|Hrvaška|Ladja|3|35|true|
