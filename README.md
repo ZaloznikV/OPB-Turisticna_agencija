@@ -11,49 +11,49 @@ ER Diagram:
 Legenda: *Ključ*, REFERENCA(NaToTabelo), *OBOJE*
 
 ## Države
-|*Država*| Opis |
-|----------|-----|
-|Slovenija| Slovenija, od kod lepote tvoje.|
-|Avstrija|  Tam se je rodil Mozart.|
-|Madžarska| Bila je nekoč del Avstro-Ogrske.|
-|Italija| Radi jedo testenine. |
-|Hrvaška| Ponosni so na svoje morje.|
+|*Id*|Država| Opis |
+|----|----------|-----|
+|1|Slovenija| Slovenija, od kod lepote tvoje.|
+|2|Avstrija|  Tam se je rodil Mozart.|
+|3|Madžarska| Bila je nekoč del Avstro-Ogrske.|
+|4|Italija| Radi jedo testenine. |
+|5|Hrvaška| Ponosni so na svoje morje.|
 
 ## Atrakcije
-|*Atrakcija*|
-|--|
-|Narava|
-|Šport|
-|Kultura|
-|Zabava|
-|Hrana|
+|*Id*|Atrakcija|
+|--|--|
+|1|Narava|
+|2|Šport|
+|3|Kultura|
+|4|Zabava|
+|5|Hrana|
 
 ## Atrakcije po državah
-| *DRŽAVA*(Države) | *ATRAKCIJE*(Atrakcije)|
-|---|---|
-|Slovenija|Narava|
-|Slovenija|Šport|
-|Avstrija|Kultura|
-|Italija|Hrana|
-|Madžarska|Zabava|
-|Hrvaška|Narava|
+|*Id*| DRŽAVA(Države) | ATRAKCIJE(Atrakcije)|
+|--|---|---|
+|1|Slovenija|Narava|
+|2|Slovenija|Šport|
+|3|Avstrija|Kultura|
+|4|Italija|Hrana|
+|5|Madžarska|Zabava|
+|6|Hrvaška|Narava|
 
 ## Prevoz
-|*Prevoz*|
-|---|
-|Avtobus|
-|Vlak|
-|Letalo|
-|Ladja|
+|*Id*|Prevoz|
+|--|---|
+|1|Avtobus|
+|2|Vlak|
+|3|Letalo|
+|4|Ladja|
 
 ## Možni transporti
-|*DRŽAVA_ZAČETEK*(Države)|*DRŽAVA_KONEC*(Države)|*PREVOZ*(Prevoz)| Trajanje (v urah) | Cena (v evrih)|
-|--|--|--|--|--|
-|Slovenija|Hrvaška|Avtobus|2|12|
-|Slovenija|Hrvaška|Ladja|3|35|
-|Italija|Hrvaška|Ladja|3|40|
-|Avstrija|Madžarska|Vlak|1|20|
-|Hrvaška|Avstrija|Letalo|1|50|
+|*Id*|DRŽAVA_ZAČETEK(Države)|DRŽAVA_KONEC(Države)|PREVOZ(Prevoz)| Trajanje (v urah) | Cena (v evrih)| Ali je možno|
+|--|--|--|--|--|--|
+|1|Slovenija|Hrvaška|Avtobus|2|12|true|
+|2|Slovenija|Hrvaška|Ladja|3|35|true|
+|3|Italija|Hrvaška|Ladja|3|40|true|
+|4|Avstrija|Madžarska|Vlak|1|20|true|
+|5|Hrvaška|Avstrija|Letalo|1|50|false|
 
 ## Osebe
 |*Id*|Ime|Priimer|DRŽAVLJANSTVO (Države)|E-mail|Geslo|
@@ -63,11 +63,11 @@ Legenda: *Ključ*, REFERENCA(NaToTabelo), *OBOJE*
 |3|Carponio|Caccamise|Italija|carponio.caccamise@gmail.com|Roma123|
 
 ## Izlet
-|*Id*|OSEBA(Osebe)|DRŽAVA_ZAČETEK(Države)|DRŽAVA_KONEC(Države)|PREVOZ(Prevoz)|Datum|Ocena|
+|*Id*|OSEBA(Osebe)|TRANSPORT(Možni transporti)|Datum|Ocena|
 |--|--|--|--|--|--|--|
-|1|2|Slovenija|Hrvaška|Ladja|1.8.2019|10|
-|2|1|Avstrija|Madžarska|Vlak|12.9.2019|10|
-|3|3|Italija|Hrvaška|Ladja|3.12.2019|10|
+|1|2|2|1.8.2019|10|
+|2|1|4|12.9.2019|10|
+|3|3|3|3.12.2019|10|
 
 
 
