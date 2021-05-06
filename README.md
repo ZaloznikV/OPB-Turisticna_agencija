@@ -1,6 +1,6 @@
 # OPB-Turisticna_agencija
 Projekt pri predmetu Osnove podatkovnih baz 
-_proba  fgfgfhfhfhfghdfgdfgdfgdfgdfgdfgfhgfhdg_
+proba
 ---
 ER Diagram:
 
