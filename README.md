@@ -64,7 +64,7 @@ Legenda: *Ključ*, REFERENCA(NaToTabelo), *OBOJE*
 
 ## Izlet
 |*Id*|OSEBA(Osebe)|TRANSPORT(Možni transporti)|Datum|Ocena|
-|--|--|--|--|--|--|--|
+|--|--|--|--|--|
 |1|2|2|1.8.2019|10|
 |2|1|4|12.9.2019|10|
 |3|3|3|3.12.2019|10|
