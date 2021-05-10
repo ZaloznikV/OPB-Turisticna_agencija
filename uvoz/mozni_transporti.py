@@ -11,9 +11,9 @@ def ustvari_tabelo():
     cur.execute("""
         CREATE TABLE mozni_transporti (
             id SERIAL PRIMARY KEY,
-            drzava_zacetek INTEGER REFERENCE drzave(id),
-            drzava_konec TEXT INTEGER REFERENCE drzave(id),
-            prevoz TEXT INTEGER REFERENCE prevozi(id),
+            drzava_zacetek INTEGER REFERENCES drzave(id),
+            drzava_konec INTEGER REFERENCES drzave(id),
+            prevoz INTEGER REFERENCES prevoz(id),
             trajanje INTEGER NOT NULL,
             cena INTEGER NOT NULL,
             na_voljo BOOL NOT NULL
@@ -56,4 +56,8 @@ def nastavi_moznost(id, b):
 
 conn = psycopg2.connect(database=auth.db, host=auth.host, user=auth.user, password=auth.password)
 cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor) 
-ustvari_tabelo()
+
+
+######################
+#ustvari_tabelo()
+#uvozi_podatke()

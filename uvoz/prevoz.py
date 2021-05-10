@@ -9,7 +9,7 @@ import csv
 
 def ustvari_tabelo():
     cur.execute("""
-        CREATE TABLE prevozi (
+        CREATE TABLE prevoz (
             id SERIAL PRIMARY KEY,
             prevoz TEXT NOT NULL
         );
@@ -18,19 +18,19 @@ def ustvari_tabelo():
 
 def pobrisi_tabelo():
     cur.execute("""
-        DROP TABLE prevozi;
+        DROP TABLE prevoz;
     """)
     conn.commit()
-    print("zbrisal sem prevozi, ups")
+    print("zbrisal sem prevoz, ups")
 
 def uvozi_podatke():
-    with open("podatki/prevozi.csv", encoding="UTF-8") as f: ## ime ki si ga bomo zbrali
+    with open("podatki/prevoz.csv", encoding="UTF-8") as f: ## ime ki si ga bomo zbrali
         rd = csv.reader(f)
         next(rd) # izpusti naslovno vrstico
         for r in rd:
             r = [None if x in ('', '-') else x for x in r]
             cur.execute("""
-                INSERT INTO prevozi
+                INSERT INTO prevoz
                 (prevoz)
                 VALUES (%s)
                 RETURNING id
@@ -49,3 +49,7 @@ def uvozi_podatke():
 
 conn = psycopg2.connect(database=auth.db, host=auth.host, user=auth.user, password=auth.password)
 cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor) 
+
+######################
+#ustvari_tabelo()
+#uvozi_podatke()
