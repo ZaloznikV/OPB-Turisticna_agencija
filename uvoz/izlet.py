@@ -7,12 +7,14 @@ psycopg2.extensions.register_type(psycopg2.extensions.UNICODE) # se znebimo prob
 
 import csv
 
+
+
 def ustvari_tabelo():
     cur.execute("""
         CREATE TABLE izlet (
             id SERIAL PRIMARY KEY,
-            oseba INTEGER REFERENCES osebe(id),
-            transport INTEGER REFERENCES mozni_transporti(id),
+            oseba INTEGER REFERENCE osebe(id),
+            transport INTEGER REFERENCE mozni_transporti(id),
             datum DATE NOT NULL,
             ocena INTEGER
         );
@@ -27,7 +29,7 @@ def pobrisi_tabelo():
     print("zbrisal sem izlet, ups")
 
 def uvozi_podatke():
-    with open("podatki/izlet2.csv", encoding="UTF-8") as f: ## ime ki si ga bomo zbrali
+    with open("podatki/izlet.csv", encoding="UTF-8") as f: ## ime ki si ga bomo zbrali
         rd = csv.reader(f)
         next(rd) # izpusti naslovno vrstico
         for r in rd:
@@ -52,7 +54,6 @@ def uvozi_podatke():
 
 conn = psycopg2.connect(database=auth.db, host=auth.host, user=auth.user, password=auth.password)
 cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor) 
-
-######################
-#ustvari_tabelo()
+pobrisi_tabelo()
+ustvari_tabelo()
 uvozi_podatke()
