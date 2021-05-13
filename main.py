@@ -22,13 +22,31 @@ DB_PORT = os.environ.get('POSTGRES_PORT', 5432)
 # odkomentiraj, če želiš sporočila o napakah
 bottle.debug(True)
 
+uporabnik = ""
+geslo = ""
+
 @get('/')
 def prva_stran():
     return template('index.tpl')
 
-@get('/<uporabnik>/')
-def nalozi_stran_uporabnika(uporabnik):
-    return template('stran_uporabnika.tpl', uporabnik = uporabnik)
+@get('/prijavljen/')
+def nalozi_stran_uporabnika():
+    # (ime, koncnica) = uporabnik.split('@')
+    global uporabnik
+    global geslo
+    cur.execute("SELECT * FROM osebe WHERE email = %s AND geslo = %s", [uporabnik, geslo])
+    
+    return template('stran_uporabnika.tpl', oseba = cur.fetchall())
+
+
+@post('/prijavljen')
+def stran_uporabnika():
+    global uporabnik 
+    uporabnik= request.forms.prijava
+    global geslo
+    geslo = request.forms.geslo
+    redirect("/prijavljen/")
+    return 
 
 # @get('/static/<ime_slike>')
 # def prikazi_sliko(ime_slike):
