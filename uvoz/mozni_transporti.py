@@ -17,6 +17,7 @@ def ustvari_tabelo():
             trajanje INTEGER NOT NULL,
             cena INTEGER NOT NULL,
             na_voljo BOOL NOT NULL
+            UNIQUE (drzava_zacetek, drzava_konec, prevoz),
         );
     """)
     conn.commit()

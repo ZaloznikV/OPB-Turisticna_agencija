@@ -1,6 +1,7 @@
 #!/usr/bin/python
 # -*- encoding: utf-8 -*-
 
+import bottle
 # uvozimo bottle.py
 from bottleext import get, post, run, request, template, redirect, static_file, url
 
@@ -19,7 +20,19 @@ RELOADER = os.environ.get('BOTTLE_RELOADER', True)
 DB_PORT = os.environ.get('POSTGRES_PORT', 5432)
 
 # odkomentiraj, če želiš sporočila o napakah
-debug(True)
+bottle.debug(True)
+
+@get('/')
+def prva_stran():
+    return template('index.tpl')
+
+@get('/<uporabnik>/')
+def nalozi_stran_uporabnika(uporabnik):
+    return template('stran_uporabnika.tpl', uporabnik = uporabnik)
+
+# @get('/static/<ime_slike>')
+# def prikazi_sliko(ime_slike):
+#     return bottle.static_file(ime_slike, root = './img')
 
 # @get('/static/<filename:path>')
 # def static(filename):

@@ -19,7 +19,7 @@ def ustvari_tabelo():
 
 def pobrisi_tabelo():
     cur.execute("""
-        DROP TABLE države;
+        DROP TABLE drzave;
     """)
     conn.commit()
     print("zbrisal sem drzave, ups")
