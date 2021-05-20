@@ -13,8 +13,8 @@ def ustvari_tabelo():
     cur.execute("""
         CREATE TABLE izlet (
             id SERIAL PRIMARY KEY,
-            oseba INTEGER REFERENCE osebe(id),
-            transport INTEGER REFERENCE mozni_transporti(id),
+            oseba INTEGER REFERENCES osebe(id),
+            transport INTEGER REFERENCES mozni_transporti(id),
             datum DATE NOT NULL,
             ocena INTEGER
         );

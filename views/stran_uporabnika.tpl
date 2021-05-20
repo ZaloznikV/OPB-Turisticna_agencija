@@ -1,6 +1,7 @@
 %  rebase('base.tpl')
 
-% (_, ime, priimek, _, email, geslo) = oseba[0]
+
+% (_, ime, priimek, _, email, geslo) = oseba
 
 <figure>
 

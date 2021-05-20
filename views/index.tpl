@@ -6,6 +6,10 @@
 
 </figure>
 
+% if (napaka != None):
+  {{napaka}}
+% end
+
 <form align="center" action="/prijavljen" method="post">
   <div>
     <label for="prijava">E-mail:</label>
@@ -20,7 +24,7 @@
 </form>
 
 
-<form align="center" action="/nov uporabnik/" method="get">
+<form align="center" action="/registracija/" method="get">
   <div>
     <label for="prijava">Nov naročnik?</label>
   </div>
