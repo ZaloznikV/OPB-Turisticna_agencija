@@ -16,8 +16,8 @@ def ustvari_tabelo():
             prevoz INTEGER REFERENCES prevoz(id),
             trajanje INTEGER NOT NULL,
             cena INTEGER NOT NULL,
-            na_voljo BOOL NOT NULL
-            UNIQUE (drzava_zacetek, drzava_konec, prevoz),
+            na_voljo BOOL NOT NULL,
+            UNIQUE (drzava_zacetek, drzava_konec, prevoz)
         );
     """)
     conn.commit()
@@ -30,7 +30,7 @@ def pobrisi_tabelo():
     print("zbrisal sem mozni_transporti, ups")
 
 def uvozi_podatke():
-    with open("podatki/mozni_transporti.csv", encoding="UTF-8") as f: ## ime ki si ga bomo zbrali
+    with open("podatki/mozni_transporti_test.csv", encoding="UTF-8") as f: ## ime ki si ga bomo zbrali
         rd = csv.reader(f)
         next(rd) # izpusti naslovno vrstico
         for r in rd:
@@ -60,5 +60,5 @@ cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
 
 
 ######################
-#ustvari_tabelo()
+ustvari_tabelo()
 #uvozi_podatke()

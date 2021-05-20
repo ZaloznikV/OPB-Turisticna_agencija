@@ -13,8 +13,8 @@ def ustvari_tabelo():
     cur.execute("""
         CREATE TABLE izlet (
             id SERIAL PRIMARY KEY,
-            oseba INTEGER REFERENCE osebe(id),
-            transport INTEGER REFERENCE mozni_transporti(id),
+            oseba INTEGER REFERENCES osebe(id),
+            transport INTEGER REFERENCES mozni_transporti(id),
             datum DATE NOT NULL,
             ocena INTEGER
         );
@@ -54,6 +54,6 @@ def uvozi_podatke():
 
 conn = psycopg2.connect(database=auth.db, host=auth.host, user=auth.user, password=auth.password)
 cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor) 
-pobrisi_tabelo()
-ustvari_tabelo()
+#pobrisi_tabelo()
+#ustvari_tabelo()
 uvozi_podatke()

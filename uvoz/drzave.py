@@ -25,7 +25,7 @@ def pobrisi_tabelo():
     print("zbrisal sem drzave, ups")
 
 def uvozi_podatke():
-    with open("podatki/drzave.csv", encoding="UTF-8") as f: ## ime ki si ga bomo zbrali
+    with open("podatki/drzave_test.csv", encoding="UTF-8") as f: ## ime ki si ga bomo zbrali
         rd = csv.reader(f)
         next(rd) # izpusti naslovno vrstico
         for r in rd:
