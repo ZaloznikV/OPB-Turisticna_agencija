@@ -6,12 +6,9 @@
 
 </figure>
 
-% if (napaka != None):
-{{napaka}}
-%end
-% from bottleext import get, post, run, request, template, redirect, static_file, url
 
-<section class="container-fluid bg">
+
+<section class="container-fluid">
   <section class="row justify-content-center">
     <section class="col-12 col-sm-6 col-md-3">
       <form class="form-container" action="/registracija" method="post">
