@@ -65,10 +65,9 @@ def stran_uporabnika():
 @bottle.get("/registracija/")
 def login_get():
     """Prikaži formo za registracijo."""
-    return bottle.template("registracija.tpl", 
-                           geslo=None,
-                           ime=None,
-                           napaka=None)
+    cur.execute("SELECT id, ime FROM drzave")
+    drzave = cur.fetchall()
+    return bottle.template('registracija.tpl', napaka = None, drzave = drzave)
 
 @bottle.post("/registracija")
 def register_post():
@@ -76,6 +75,7 @@ def register_post():
     ime = request.forms.ime
     priimek = request.forms.priimek
     email = request.forms.email
+    # email = password_hash(email)
     drzavljanstvo = request.forms.drzavljanstvo
     geslo1 = request.forms.geslo1
     geslo2 = request.forms.geslo2
@@ -87,7 +87,7 @@ def register_post():
                                napaka='Ta E-mail že obstaja')
     elif not geslo1 == geslo2:
         # Geslo se ne ujemata
-        return bottle.template("register.html",
+        return bottle.template("registracija.tpl",
                                napaka='Gesli se ne ujemata')
     else:
         # Vse je v redu, vstavi novega uporabnika v bazo
@@ -104,9 +104,9 @@ def register_post():
 # def prikazi_sliko(ime_slike):
 #     return bottle.static_file(ime_slike, root = './img')
 
-# @get('/static/<filename:path>')
-# def static(filename):
-#     return static_file(filename, root='static')
+@get('/static/<filename:path>')
+def static(filename):
+    return static_file(filename, root='static')
 
 # @get('/')
 # def index():

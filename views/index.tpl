@@ -15,46 +15,23 @@
 <section class="container-fluid bg">
   <section class="row justify-content-center">
     <section class="col-12 col-sm-6 col-md-3">
-      <form class="form-container">
+      <form class="form-container" action="/prijavljen" method="post">
         <div class="mb-3">
-          <label for="exampleInputEmail1" class="form-label">Email address</label>
-          <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-          <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+          <label for="exampleInputEmail1" class="form-label">Email naslov</label>
+          <input type="email" name="prijava" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" required>
+          <div id="emailHelp" class="form-text">Vaš email ne bomo delili z nikomur.</div>
         </div>
         <div class="mb-3">
-          <label for="exampleInputPassword1" class="form-label">Password</label>
-          <input type="password" class="form-control" id="exampleInputPassword1">
+          <label for="exampleInputPassword1" class="form-label">Geslo</label>
+          <input type="password" name="geslo" class="form-control" id="exampleInputPassword1" required>
         </div>
-        <div class="mb-3 form-check">
-          <input type="checkbox" class="form-check-input" id="exampleCheck1">
-          <label class="form-check-label" for="exampleCheck1">Check me out</label>
-        </div>
-        <button type="submit" class="btn btn-primary col-6 mx-auto">Submit</button>
+        <button type="submit" class="btn btn-primary col-6 mt-3 mb-5">Prijava</button>
+        <button type="reset" class="btn btn-secondary mt-3 mb-5">Ponovno</button>  
+        <p>Nov naročnik? <a href="/registracija/">Registriraj se </a></p>
       </form>
     </section>
   </section>
 </section>
 
 
-
-<form align="center" action="/prijavljen" method="post">
-  <div>
-    <label for="prijava">E-mail:</label>
-    <input type="text" id="prijava" name="prijava" required>
-  </div>
-  <div>
-    <label for="prijava">Geslo:</label>
-    <input type="password" name="geslo" required>
-  </div>
-  <button type="reset">Ponovno</button>
-  <button type="submit">Prijava</button>
-</form>
-
-
-<form align="center" action="/registracija/" method="get">
-  <div>
-    <label for="prijava">Nov naročnik?</label>
-  </div>
-  <button type="submit">Registracija</button>
-</form>
 
