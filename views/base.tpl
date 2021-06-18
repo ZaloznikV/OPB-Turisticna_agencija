@@ -17,31 +17,29 @@
     <body>
     <nav class="navbar navbar-expand-lg navbar-light" style="background-color: 	#D22B2B;">
     <div class="container-fluid">
-        <a class="navbar-brand" href="#">Turistična agencija</a>
+        <a class="navbar-brand" href="/">Turistična agencija</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
         </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item">
-        <a class="nav-link active" aria-current="page" href="#">Domov</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Link</a>
+        % if (oseba):
+        <a class="nav-link active" aria-current="page" href="/moja_stran">Moja stran</a>
+        %else:
+        <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Moja stran</a>
+        %end
         </li>
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            Dropdown
+            Izleti
           </a>
           <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <li><a class="dropdown-item" href="#">Action</a></li>
-            <li><a class="dropdown-item" href="#">Another action</a></li>
+            <li><a class="dropdown-item" href="#">Pojdi na izlet</a></li>
+            <li><a class="dropdown-item" href="#">Priljubljeni izleti</a></li>
             <li><hr class="dropdown-divider"></li>
             <li><a class="dropdown-item" href="#">Something else here</a></li>
           </ul>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
         </li>
       </ul>
        

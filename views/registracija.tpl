@@ -42,9 +42,9 @@
           <input type="password" name="geslo2" class="form-control" id="exampleInputPassword1" required>
           <div id="emailHelp" class="form-text">Vaši podatki podatki so pri nas varni.</div> 
         </div>
-        <button type="submit" class="btn btn-primary col-6 mt-3 mb-5">Registracija</button>
+        <button type="submit" class="btn btn-success col-6 mt-3 mb-5">Registracija</button>
         <button type="reset" class="btn btn-secondary mt-3 mb-5">Ponovno</button> 
-        <p>Si že naročen? <a href="/">Prijavi se </a></p>
+        <p>Si že naročen? <a href="/prijava">Prijavi se </a></p>
       </form>
     </section>
   </section>
