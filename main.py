@@ -35,13 +35,13 @@ def password_hash(s):
 @get('/')
 def prva_stran():
     email = bottle.request.get_cookie('email', default=None, secret=secret)
-    geslo = bottle.request.get_cookie('geslo', default=None, secret=secret)
+    # geslo = bottle.request.get_cookie('geslo', default=None, secret=secret)
     bottle.response.set_cookie('napaka', None, path='/', secret=secret)
     # if (email == None):
     #     return template('index.tpl', oseba = None, napaka = None)
-    cur.execute("SELECT * FROM osebe WHERE email = %s AND geslo = %s", [email, geslo])
+    cur.execute("SELECT * FROM osebe WHERE email = %s", [email])
     oseba = cur.fetchone()
-    conn.commit()
+    # conn.commit()
     print('///////////////////////////////')
     print(oseba)
     # if oseba:
@@ -65,7 +65,7 @@ def stran_uporabnika():
     oseba = cur.fetchone()
     if oseba:
         bottle.response.set_cookie('email', email, path='/', secret=secret)
-        bottle.response.set_cookie('geslo', geslo, path='/', secret=secret)
+        # bottle.response.set_cookie('geslo', geslo, path='/', secret=secret)
         redirect("/")
         return 
     else:
@@ -79,7 +79,7 @@ def stran_uporabnika():
 def odjava():
     print("odjavljam se")
     bottle.response.set_cookie('email', None, path='/', secret=secret)
-    bottle.response.set_cookie('geslo', None, path='/', secret=secret)
+    # bottle.response.set_cookie('geslo', None, path='/', secret=secret)
     redirect("/")
     return 
 
@@ -178,15 +178,15 @@ def register_post():
         conn.commit()
         # Daj uporabniku cookie
         bottle.response.set_cookie('email', email, path='/', secret=secret)
-        bottle.response.set_cookie('geslo', geslo, path='/', secret=secret)
+        # bottle.response.set_cookie('geslo', geslo, path='/', secret=secret)
         bottle.redirect("/")
         return
 
 @get("/nastavitve")
 def nastavitve():
     email = bottle.request.get_cookie('email', default=None, secret=secret)
-    geslo = bottle.request.get_cookie('geslo', default=None, secret=secret)
-    cur.execute("SELECT * FROM osebe WHERE email = %s AND geslo = %s", [email, geslo])
+    # geslo = bottle.request.get_cookie('geslo', default=None, secret=secret)
+    cur.execute("SELECT * FROM osebe WHERE email = %s", [email])
     oseba = cur.fetchone()
     cur.execute("SELECT ime FROM drzave WHERE id = %s", [oseba[3]])
     drzava = cur.fetchone()
@@ -197,8 +197,8 @@ def nastavitve():
 @get('/spremeni')
 def spremeni_stran():
     email = bottle.request.get_cookie('email', default=None, secret=secret)
-    geslo = bottle.request.get_cookie('geslo', default=None, secret=secret)
-    cur.execute("SELECT * FROM osebe WHERE email = %s AND geslo = %s", [email, geslo])
+    # geslo = bottle.request.get_cookie('geslo', default=None, secret=secret)
+    cur.execute("SELECT * FROM osebe WHERE email = %s", [email])
     oseba = cur.fetchone()
     cur.execute("SELECT id, ime FROM drzave")
     drzave = cur.fetchall()
@@ -213,8 +213,8 @@ def spremeni():
     novo_geslo1 = request.forms.geslo1
     novo_geslo2 = request.forms.geslo2
     email = bottle.request.get_cookie('email', default=None, secret=secret)
-    geslo = bottle.request.get_cookie('geslo', default=None, secret=secret)
-    cur.execute("SELECT * FROM osebe WHERE email = %s AND geslo = %s", [email, geslo])
+    # geslo = bottle.request.get_cookie('geslo', default=None, secret=secret)
+    cur.execute("SELECT * FROM osebe WHERE email = %s", [email])
     oseba = cur.fetchone()
     print(novo_ime, novi_priimek, novo_drzavljanstvo, nov_email, novo_geslo1)
     # cur.execute("SELECT ime FROM drzave WHERE id = %s", [oseba[3]])
@@ -253,7 +253,7 @@ def spremeni():
     """, [novo_ime, novi_priimek, novo_drzavljanstvo, nov_email, novo_geslo1, oseba[0]])
     conn.commit()
     bottle.response.set_cookie('email', nov_email, path='/', secret=secret)
-    bottle.response.set_cookie('geslo', novo_geslo1, path='/', secret=secret)
+    # bottle.response.set_cookie('geslo', novo_geslo1, path='/', secret=secret)
     # if (nov_email != oseba[4]):
     #     cur.execute(" UPDATE osebe SET email = %s WHERE
     redirect("/nastavitve")
@@ -262,13 +262,74 @@ def spremeni():
 @get('/moja_stran')
 def moja_stran():
     email = bottle.request.get_cookie('email', default=None, secret=secret)
-    geslo = bottle.request.get_cookie('geslo', default=None, secret=secret)
-    cur.execute("SELECT * FROM osebe WHERE email = %s AND geslo = %s", [email, geslo])
+    # geslo = bottle.request.get_cookie('geslo', default=None, secret=secret)
+    cur.execute("SELECT * FROM osebe WHERE email = %s", [email])
     oseba = cur.fetchone()
-    cur.execute("SELECT * FROM izlet WHERE oseba = %s", [oseba[0]])
+    cur.execute("""
+        SELECT izlet.datum, drzave_start.ime, drzave_end.ime, prevoz.prevoz, 
+        mozni_transporti.trajanje, mozni_transporti.cena, izlet.ocena 
+        FROM izlet
+        JOIN mozni_transporti ON izlet.transport = mozni_transporti.id
+        JOIN drzave AS drzave_start ON mozni_transporti.drzava_zacetek = drzave_start.id
+        JOIN drzave AS drzave_end ON mozni_transporti.drzava_konec = drzave_end.id
+        JOIN prevoz ON mozni_transporti.prevoz = prevoz.id
+        WHERE izlet.oseba = %s 
+    """, [oseba[0]])
+    # cur.execute("SELECT * FROM izlet WHERE oseba = %s", [oseba[0]])
     izleti = cur.fetchall()
+    for izlet in izleti:
+        izlet[0] = boljsi_datum(izlet[0])
     print(izleti)
     return bottle.template('moja_stran.tpl', napaka = None, oseba = oseba, izleti = izleti)
+
+def boljsi_datum(niz):
+    niz = str(niz)
+    d = niz.split("-")
+    if (d[1] == "01"):
+        d[1] = "januar"
+    elif (d[1] == "02"):
+        d[1] = "februar"
+    elif (d[1] == "03"):
+        d[1] = "marec"
+    elif (d[1] == "04"):
+        d[1] = "april"
+    elif (d[1] == "05"):
+        d[1] = "maj"
+    elif (d[1] == "06"):
+        d[1] = "junij"
+    elif (d[1] == "07"):
+        d[1] = "julij"
+    elif (d[1] == "08"):
+        d[1] = "avgust"
+    elif (d[1] == "09"):
+        d[1] = "september"
+    elif (d[1] == "10"):
+        d[1] = "oktober"
+    elif (d[1] == "11"):
+        d[1] = "november"
+    elif (d[1] == "12"):
+        d[1] = "december"
+    else: 
+        d[1] = "napaka"
+    return d[2] + ". " + d[1] + " " + d[0]
+
+@get('/izlet')
+def izlet():
+    email = bottle.request.get_cookie('email', default=None, secret=secret)
+    # geslo = bottle.request.get_cookie('geslo', default=None, secret=secret)
+    cur.execute("SELECT * FROM osebe WHERE email = %s", [email])
+    oseba = cur.fetchone()
+    cur.execute("""
+        SELECT drzave_start.ime, drzave_end.ime, prevoz.prevoz, trajanje, cena FROM mozni_transporti
+        JOIN drzave AS drzave_start ON mozni_transporti.drzava_zacetek = drzave_start.id
+        JOIN drzave AS drzave_end ON mozni_transporti.drzava_konec = drzave_end.id
+        JOIN prevoz ON mozni_transporti.prevoz = prevoz.id
+        WHERE na_voljo
+        """)
+    mozni_izleti = cur.fetchall()
+    return bottle.template('izleti.tpl', napaka = None, oseba = oseba, mozni_izleti = mozni_izleti)
+
+
 
 
 # @get('/static/<ime_slike>')

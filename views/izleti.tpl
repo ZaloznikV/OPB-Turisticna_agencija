@@ -1,34 +1,30 @@
 %  rebase('base.tpl')
 
-
-
 <figure>
 
-  <figcaption><h1 align="center" >Moja stran</h1></figcaption>
+  <figcaption><h1 align="center" >Pojdi na izlet!</h1></figcaption>
 
 </figure>
 
-% if (izleti):
+% if (mozni_izleti):
 <table class="table">
   <thead>
     <tr>
       <th scope="col">#</th>
-      <th scope="col">Datum</th>
       <th scope="col">Od kod</th>
       <th scope="col">Kam</th>
       <th scope="col">Prevoz</th>
       <th scope="col">Trajanje (v urah)</th>
       <th scope="col">Cena (v evrih)</th>
-      <th scope="col">Ocena</th>
-      <th scope="col">Spremeni oceno</th>
+      <th scope="col">Pojdi!</th>
     </tr>
   </thead>
   <tbody>
-  % for i in range(len(izleti)):
+  % for i in range(len(mozni_izleti)):
     <tr>
       <th scope="row">{{i+1}}</th>
-      % for j in range(len(izleti[0])):
-        <td>{{izleti[i][j]}}</td>
+      % for j in range(len(mozni_izleti[0])):
+        <td>{{mozni_izleti[i][j]}}</td>
       %end
       <td></td>
     </tr>
@@ -36,5 +32,5 @@
   </tbody>
 </table>
 %else:
-Verjetno še niste bili na nobenem izletu pri nas...
+Trenutno ni na voljo nobenih izletov.
 %end
