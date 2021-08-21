@@ -13,13 +13,8 @@
   <section class="row justify-content-center">
     <section class="col-12 col-sm-6 col-md-3 form-container2" style = "top:45%; fill:transparent;">
       <div class="row justify-content-center">
-      %if (oseba):
-        <button class="btn btn-success col-4 mx-2" onclick="window.location.href='/moja_stran';" >Moja Stran</button>
-        <button class="btn btn-success col-4 mx-2" onclick="window.location.href='/izlet';">Izleti</button>
-      %else:
-        <button class="btn btn-success col-4 mx-2" onclick="window.location.href='/prijava';" >Prijava</button>
-        <button class="btn btn-success col-4 mx-2" onclick="window.location.href='/registracija/';">Registracija</button>
-      %end
+      <button class="btn btn-success col-4 mx-2" onclick="window.location.href='/prijava';" >Prijava</button>
+      <button class="btn btn-success col-4 mx-2" onclick="window.location.href='/registracija/';">Registracija</button>
       </div>
     </section>
   </section>

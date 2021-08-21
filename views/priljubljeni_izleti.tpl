@@ -4,7 +4,7 @@
 
 <figure>
 
-  <figcaption><h1 align="center" >Moja stran</h1></figcaption>
+  <figcaption><h1 align="center" >Priljubljeni izleti</h1></figcaption>
 
 </figure>
 
@@ -13,10 +13,9 @@
   <thead>
     <tr>
       <th scope="col">#</th>
-      <th scope="col">Transport</th>
+      <th scope="col">Transport</th>                                        #Verjetno treba razpisati transport na vec stolpcev in nekako klciati iz tega
       <th scope="col">Datum</th>
       <th scope="col">Ocena</th>
-      <th scope="col">Spremeni oceno</th>
     </tr>
   </thead>
   <tbody>
@@ -32,5 +31,5 @@
   </tbody>
 </table>
 %else:
-Verjetno še niste bili na nobenem izletu pri nas...
+Nihče iz vaše države še ni bil na izleti s našo agencijo. 
 %end
