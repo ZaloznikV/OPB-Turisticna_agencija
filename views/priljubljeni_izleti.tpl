@@ -31,5 +31,5 @@
   </tbody>
 </table>
 %else:
-Nihče iz vaše države še ni bil na izleti s našo agencijo. 
+Nihče iz vaše države še ni bil na izletu s našo agencijo. 
 %end
