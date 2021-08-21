@@ -275,7 +275,7 @@ def moja_stran():
  # kako klikniti na stran???
  #dodal sem tudi kopijo moja_stran za priljubljene z malenksot spremenjeno 
  #ampak je tako treba razbiti prevoz na manjse in niti nevem kako se klikne na stran
-@get('priljubljeni_izleti')
+@get('/priljubljeni_izleti')
 def priljubljeni_izleti():
     email = bottle.request.get_cookie('email', default=None, secret=secret)
     geslo = bottle.request.get_cookie('geslo', default=None, secret=secret)

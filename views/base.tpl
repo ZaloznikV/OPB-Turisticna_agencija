@@ -36,7 +36,7 @@
           </a>
           <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
             <li><a class="dropdown-item" href="#">Pojdi na izlet</a></li>
-            <li><a class="dropdown-item" href="#">Priljubljeni izleti</a></li>
+            <li><a class="dropdown-item" href="/priljubljeni_izleti">Priljubljeni izleti</a></li>
             <li><hr class="dropdown-divider"></li>
             <li><a class="dropdown-item" href="#">Something else here</a></li>
           </ul>
