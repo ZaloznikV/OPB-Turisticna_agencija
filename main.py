@@ -271,10 +271,9 @@ def moja_stran():
     print(izleti)
     return bottle.template('moja_stran.tpl', napaka = None, oseba = oseba, izleti = izleti)
 
- #to zdaj delam, ne dela ampak neka osnova je 
- # kako klikniti na stran???
+ 
  #dodal sem tudi kopijo moja_stran za priljubljene z malenksot spremenjeno 
- #ampak je tako treba razbiti prevoz na manjse in niti nevem kako se klikne na stran
+ #nevem zakaj ne dela če pa v bazi poizveduje pravilno
 @get('/priljubljeni_izleti')
 def priljubljeni_izleti():
     email = bottle.request.get_cookie('email', default=None, secret=secret)
@@ -282,9 +281,10 @@ def priljubljeni_izleti():
     cur.execute("SELECT * FROM osebe WHERE email = %s AND geslo = %s", [email, geslo])
     oseba = cur.fetchone()
     drzavljanstvo_osebe = oseba[3]
-    print(drzavljanstvo_osebe)
-    #cur.execute("SELECT top 3 * FROM izlet JOIN drzavljanstvo ON oseba = drzavljanstvo_osebe order by num desc limit 10")
-    cur.execute("SELECT  * FROM izleti WHERE oseba IN (SELECT id FROM osebe WHERE drzavljanstvo = drzavljanstvo_osebe)")
+    print("oseba je: ", oseba)
+    print("drzvljanstvo osebe je: ", drzavljanstvo_osebe)
+    #SQL ukaz je pravi KER V fmf BAZI DELA. ZAKAJ TU NE DELA???
+    cur.execute("SELECT  * FROM izlet WHERE oseba IN (SELECT id FROM osebe WHERE drzavljanstvo = {} LIMIT 3".format(oseba[3]) )
     izleti = cur.fetchall()
     print(izleti)
     return bottle.template('priljubljeni_izleti.tpl', napaka = None, oseba = oseba, izleti = izleti)
