@@ -299,11 +299,29 @@ def moja_stran():
     print("vsi izleti so: ", transporti)
     return bottle.template('moja_stran.tpl', napaka = None, oseba = oseba, izleti = transporti)
 
- 
- 
- #nevem zakaj ne dela če pa v bazi poizveduje pravilno
+ # @post('/moja_stran')  ????????????????????????????????????????????????????????????
+# def spremeni_oceno():
 
- #problem s pravicami???
+#     email = bottle.request.get_cookie('email', default=None, secret=secret)
+#     geslo = bottle.request.get_cookie('geslo', default=None, secret=secret)
+#     cur.execute("SELECT * FROM osebe WHERE email = %s AND geslo = %s", [email, geslo])
+#     oseba = cur.fetchone()
+#     cur.execute("SELECT * FROM izlet WHERE oseba = %s", [oseba[0]])
+#     izleti = cur.fetchall()
+
+#     nova_ocena = request.forms.ocena
+#     posamezni_izlet = cur.execute("SELECT * FROM izleti WHERE id = %s", [izleti[0]])
+
+#     cur.execute("""
+#         UPDATE izlet SET
+#          ocena = nova_ocena
+#         WHERE id = %s""", [izleti[0]])
+#   
+#     conn.commit() 
+# redirect("/moja_stran")
+#    return
+ 
+
 
 @get('/priljubljeni_izleti')
 def priljubljeni_izleti():
@@ -352,25 +370,7 @@ def priljubljeni_izleti():
    
 
 
-# """ @post('/moja_stran')  ????????????????????????????????????????????????????????????
-# def spremeni_oceno():
 
-#     email = bottle.request.get_cookie('email', default=None, secret=secret)
-#     geslo = bottle.request.get_cookie('geslo', default=None, secret=secret)
-#     cur.execute("SELECT * FROM osebe WHERE email = %s AND geslo = %s", [email, geslo])
-#     oseba = cur.fetchone()
-#     cur.execute("SELECT * FROM izlet WHERE oseba = %s", [oseba[0]])
-#     izleti = cur.fetchall()
-
-#     nova_ocena = request.forms.ocena
-#     posamezni_izlet = cur.execute("SELECT * FROM izleti WHERE id = %s", [izleti[0]])
-
-#     cur.execute("""
-#         UPDATE izlet SET
-#          ocena = nova_ocena
-#         WHERE id = [izleti[0]]
-#     """
-#     conn.commit() """
 
 
 # @get('/static/<ime_slike>')

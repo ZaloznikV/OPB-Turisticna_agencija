@@ -30,7 +30,7 @@
       <td>{{izleti[i][3]}}</td>
       <td>{{izleti[i][4]}}</td>
       <td>{{izleti[i][5]}}</td>
-      <td></td>
+      <td>tu pride sprememba ocene</td>
     </tr>
     %end
   </tbody>
