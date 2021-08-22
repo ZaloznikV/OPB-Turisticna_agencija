@@ -268,26 +268,86 @@ def moja_stran():
     cur.execute("SELECT * FROM izlet WHERE oseba = %s", [oseba[0]])
     izleti = cur.fetchall()
 
-    print(izleti)
-    return bottle.template('moja_stran.tpl', napaka = None, oseba = oseba, izleti = izleti)
+
+    transporti = []
+    print("dolzina je: ",len(izleti))
+    for i in range(len(izleti)):
+        cur.execute("SELECT * FROM mozni_transporti WHERE (id = %s)", [izleti[i][2]])
+        posamezni_izlet = cur.fetchall()
+        print("posamezni izlet je: ", posamezni_izlet)
+        z_imeni = []
+        z_imeni.append(posamezni_izlet[0][0])
+        cur.execute("SELECT ime FROM drzave WHERE (id = %s)", [posamezni_izlet[0][1]]) #izbere ime zacetne drzave
+        ime_zacetne_drzave = cur.fetchall()
+        z_imeni.append(ime_zacetne_drzave[0][0]) #doda ime zacetne drzave
+
+        cur.execute("SELECT ime FROM drzave WHERE (id = %s)", [posamezni_izlet[0][2]]) #izbere ime koncne drzave
+        ime_koncne_drzave = cur.fetchall()
+        z_imeni.append(ime_koncne_drzave[0][0]) #doda ime koncne drzave
+
+        cur.execute("SELECT prevoz FROM prevoz WHERE (id =%s)", [posamezni_izlet[0][3]]) #izbere prevoz (avto, vlak,..)
+        ime_prevoza = cur.fetchall()
+        z_imeni.append(ime_prevoza[0][0]) #doda ime prevoza
+
+        z_imeni.append(posamezni_izlet[0][4]) #trajanje
+        z_imeni.append(posamezni_izlet[0][5]) #cena
+        #z_imeni.append(posamezni_izlet[0][6]) #na voljo - odvec
+
+        transporti.append(z_imeni)
+    #print("blabla", transporti)
+    #print(izleti)
+    print("vsi izleti so: ", transporti)
+    return bottle.template('moja_stran.tpl', napaka = None, oseba = oseba, izleti = transporti)
 
  
- #dodal sem tudi kopijo moja_stran za priljubljene z malenksot spremenjeno 
+ 
  #nevem zakaj ne dela če pa v bazi poizveduje pravilno
+
+ #problem s pravicami???
+
 @get('/priljubljeni_izleti')
 def priljubljeni_izleti():
     email = bottle.request.get_cookie('email', default=None, secret=secret)
     geslo = bottle.request.get_cookie('geslo', default=None, secret=secret)
     cur.execute("SELECT * FROM osebe WHERE email = %s AND geslo = %s", [email, geslo])
-    oseba = cur.fetchone()
-    drzavljanstvo_osebe = oseba[3]
-    print("oseba je: ", oseba)
+    oseb_a = cur.fetchone()
+    drzavljanstvo_osebe = oseb_a[3]
+    print("oseba je: ", oseb_a)
     print("drzvljanstvo osebe je: ", drzavljanstvo_osebe)
     #SQL ukaz je pravi KER V fmf BAZI DELA. ZAKAJ TU NE DELA???
-    cur.execute("SELECT  * FROM izlet WHERE oseba IN (SELECT id FROM osebe WHERE drzavljanstvo = {} LIMIT 3".format(oseba[3]) )
+    cur.execute("SELECT  * FROM izlet WHERE oseba IN (SELECT id FROM osebe WHERE drzavljanstvo = %s) LIMIT 3", [oseb_a[3]] )
+    #cur.execute("SELECT  * FROM izlet WHERE oseba IN (SELECT id FROM osebe WHERE drzavljanstvo = 2) LIMIT 3" )
     izleti = cur.fetchall()
-    print(izleti)
-    return bottle.template('priljubljeni_izleti.tpl', napaka = None, oseba = oseba, izleti = izleti)
+    print("izleti so: ",izleti)
+    transporti = []
+    print("dolzina je: ",len(izleti))
+    for i in range(len(izleti)):
+        cur.execute("SELECT * FROM mozni_transporti WHERE (id = %s)", [izleti[i][2]])
+        posamezni_izlet = cur.fetchall()
+        print("posamezni izlet je: ", posamezni_izlet)
+        z_imeni = []
+        z_imeni.append(posamezni_izlet[0][0])
+        cur.execute("SELECT ime FROM drzave WHERE (id = %s)", [posamezni_izlet[0][1]]) #izbere ime zacetne drzave
+        ime_zacetne_drzave = cur.fetchall()
+        z_imeni.append(ime_zacetne_drzave[0][0]) #doda ime zacetne drzave
+
+        cur.execute("SELECT ime FROM drzave WHERE (id = %s)", [posamezni_izlet[0][2]]) #izbere ime koncne drzave
+        ime_koncne_drzave = cur.fetchall()
+        z_imeni.append(ime_koncne_drzave[0][0]) #doda ime koncne drzave
+
+        cur.execute("SELECT prevoz FROM prevoz WHERE (id =%s)", [posamezni_izlet[0][3]]) #izbere prevoz (avto, vlak,..)
+        ime_prevoza = cur.fetchall()
+        z_imeni.append(ime_prevoza[0][0]) #doda ime prevoza
+
+        z_imeni.append(posamezni_izlet[0][4]) #trajanje
+        z_imeni.append(posamezni_izlet[0][5]) #cena
+        z_imeni.append(posamezni_izlet[0][6]) #na voljo
+    
+        transporti.append(z_imeni)
+        #print("blabla", transporti)
+        #treba se iz stevilk dobiti dejanske vrednosti in potem preurediti seznam da bo v njem vse za pisanje in potem spremeniti se tpl za izris vecjega seznama
+    print("vsi izleti so: ", transporti)
+    return bottle.template('priljubljeni_izleti.tpl', napaka = None, oseba = oseb_a, izleti = transporti)
 
    
 
