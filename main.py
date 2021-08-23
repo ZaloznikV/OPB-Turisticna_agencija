@@ -259,45 +259,77 @@ def spremeni():
     redirect("/nastavitve")
     return
 
+
 @get('/moja_stran')
 def moja_stran():
     email = bottle.request.get_cookie('email', default=None, secret=secret)
-    geslo = bottle.request.get_cookie('geslo', default=None, secret=secret)
-    cur.execute("SELECT * FROM osebe WHERE email = %s AND geslo = %s", [email, geslo])
+    # geslo = bottle.request.get_cookie('geslo', default=None, secret=secret)
+    cur.execute("SELECT * FROM osebe WHERE email = %s", [email])
     oseba = cur.fetchone()
-    cur.execute("SELECT * FROM izlet WHERE oseba = %s", [oseba[0]])
+    cur.execute("""
+        SELECT izlet.datum, drzave_start.ime, drzave_end.ime, prevoz.prevoz, 
+        mozni_transporti.trajanje, mozni_transporti.cena, izlet.ocena 
+        FROM izlet
+        JOIN mozni_transporti ON izlet.transport = mozni_transporti.id
+        JOIN drzave AS drzave_start ON mozni_transporti.drzava_zacetek = drzave_start.id
+        JOIN drzave AS drzave_end ON mozni_transporti.drzava_konec = drzave_end.id
+        JOIN prevoz ON mozni_transporti.prevoz = prevoz.id
+        WHERE izlet.oseba = %s 
+    """, [oseba[0]])
+    # cur.execute("SELECT * FROM izlet WHERE oseba = %s", [oseba[0]])
     izleti = cur.fetchall()
+    for izlet in izleti:
+        izlet[0] = boljsi_datum(izlet[0])
+    print(izleti)
+    return bottle.template('moja_stran.tpl', napaka = None, oseba = oseba, izleti = izleti)
 
+def boljsi_datum(niz):
+    niz = str(niz)
+    d = niz.split("-")
+    if (d[1] == "01"):
+        d[1] = "januar"
+    elif (d[1] == "02"):
+        d[1] = "februar"
+    elif (d[1] == "03"):
+        d[1] = "marec"
+    elif (d[1] == "04"):
+        d[1] = "april"
+    elif (d[1] == "05"):
+        d[1] = "maj"
+    elif (d[1] == "06"):
+        d[1] = "junij"
+    elif (d[1] == "07"):
+        d[1] = "julij"
+    elif (d[1] == "08"):
+        d[1] = "avgust"
+    elif (d[1] == "09"):
+        d[1] = "september"
+    elif (d[1] == "10"):
+        d[1] = "oktober"
+    elif (d[1] == "11"):
+        d[1] = "november"
+    elif (d[1] == "12"):
+        d[1] = "december"
+    else: 
+        d[1] = "napaka"
+    return d[2] + ". " + d[1] + " " + d[0]
 
-    transporti = []
-    print("dolzina je: ",len(izleti))
-    for i in range(len(izleti)):
-        cur.execute("SELECT * FROM mozni_transporti WHERE (id = %s)", [izleti[i][2]])
-        posamezni_izlet = cur.fetchall()
-        print("posamezni izlet je: ", posamezni_izlet)
-        z_imeni = []
-        z_imeni.append(posamezni_izlet[0][0])
-        cur.execute("SELECT ime FROM drzave WHERE (id = %s)", [posamezni_izlet[0][1]]) #izbere ime zacetne drzave
-        ime_zacetne_drzave = cur.fetchall()
-        z_imeni.append(ime_zacetne_drzave[0][0]) #doda ime zacetne drzave
+@get('/izlet')
+def izlet():
+    email = bottle.request.get_cookie('email', default=None, secret=secret)
+    # geslo = bottle.request.get_cookie('geslo', default=None, secret=secret)
+    cur.execute("SELECT * FROM osebe WHERE email = %s", [email])
+    oseba = cur.fetchone()
+    cur.execute("""
+        SELECT drzave_start.ime, drzave_end.ime, prevoz.prevoz, trajanje, cena FROM mozni_transporti
+        JOIN drzave AS drzave_start ON mozni_transporti.drzava_zacetek = drzave_start.id
+        JOIN drzave AS drzave_end ON mozni_transporti.drzava_konec = drzave_end.id
+        JOIN prevoz ON mozni_transporti.prevoz = prevoz.id
+        WHERE na_voljo
+        """)
+    mozni_izleti = cur.fetchall()
+    return bottle.template('izleti.tpl', napaka = None, oseba = oseba, mozni_izleti = mozni_izleti)
 
-        cur.execute("SELECT ime FROM drzave WHERE (id = %s)", [posamezni_izlet[0][2]]) #izbere ime koncne drzave
-        ime_koncne_drzave = cur.fetchall()
-        z_imeni.append(ime_koncne_drzave[0][0]) #doda ime koncne drzave
-
-        cur.execute("SELECT prevoz FROM prevoz WHERE (id =%s)", [posamezni_izlet[0][3]]) #izbere prevoz (avto, vlak,..)
-        ime_prevoza = cur.fetchall()
-        z_imeni.append(ime_prevoza[0][0]) #doda ime prevoza
-
-        z_imeni.append(posamezni_izlet[0][4]) #trajanje
-        z_imeni.append(posamezni_izlet[0][5]) #cena
-        #z_imeni.append(posamezni_izlet[0][6]) #na voljo - odvec
-
-        transporti.append(z_imeni)
-    #print("blabla", transporti)
-    #print(izleti)
-    print("vsi izleti so: ", transporti)
-    return bottle.template('moja_stran.tpl', napaka = None, oseba = oseba, izleti = transporti)
 
  # @post('/moja_stran')  ????????????????????????????????????????????????????????????
 # def spremeni_oceno():
