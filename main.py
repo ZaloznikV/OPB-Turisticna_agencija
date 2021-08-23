@@ -400,8 +400,8 @@ def priljubljeni_izleti():
     print("vsi izleti so: ", transporti)
     return bottle.template('priljubljeni_izleti.tpl', napaka = None, oseba = oseb_a, izleti = transporti)
 
-@post('/priljubljeni_izleti')
-def priljubljeni_izleti(id_izleta, datum):
+@post('/priljubljeni_izleti/<id_izleta>')
+def priljubljeni_izleti(id_izleta):
     email = bottle.request.get_cookie('email', default=None, secret=secret)
     geslo = bottle.request.get_cookie('geslo', default=None, secret=secret)
     cur.execute("SELECT * FROM osebe WHERE email = %s AND geslo = %s", [email, geslo])
@@ -412,7 +412,7 @@ def priljubljeni_izleti(id_izleta, datum):
                 (oseba, transport, datum, ocena)
                 VALUES (%s, %s, %s, %s)
                 RETURNING id
-            """, [oseb_a, id_izleta, datum, 0]) #datum bomo potem spreminjali, ocena na zacetku nic.
+            """, [oseb_a[0], id_izleta, '2021-08-23', 0]) #datum bomo potem spreminjali, ocena na zacetku nic.
     redirect("/moja_stran") #vrne na mojo stran, manjkajo se gumbi
     return
 
