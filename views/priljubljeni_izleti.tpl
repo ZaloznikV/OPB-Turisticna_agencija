@@ -19,6 +19,8 @@
       <th scope="col">Trajanje</th>
       <th scope="col">Cena</th>
       <th scope="col">Na voljo</th>
+       <th scope="col">Pojdi na izlet</th> 
+         <th scope="col">id samo za vzorec - potem pride izbrisano</th>  
     </tr>
   </thead>
   <tbody>
@@ -31,7 +33,9 @@
       <td>{{izleti[i][4]}}</td>
       <td>{{izleti[i][5]}}</td>
       <td>{{izleti[i][6]}}</td>
-      <td></td>
+      <td>tu pride povezava</td>
+      <td>{{izleti[i][7]}}</td>
+
     </tr>
     %end
   </tbody>

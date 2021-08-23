@@ -332,9 +332,9 @@ def priljubljeni_izleti():
     drzavljanstvo_osebe = oseb_a[3]
     print("oseba je: ", oseb_a)
     print("drzvljanstvo osebe je: ", drzavljanstvo_osebe)
-    #SQL ukaz je pravi KER V fmf BAZI DELA. ZAKAJ TU NE DELA???
+
     cur.execute("SELECT  * FROM izlet WHERE oseba IN (SELECT id FROM osebe WHERE drzavljanstvo = %s) LIMIT 3", [oseb_a[3]] )
-    #cur.execute("SELECT  * FROM izlet WHERE oseba IN (SELECT id FROM osebe WHERE drzavljanstvo = 2) LIMIT 3" )
+
     izleti = cur.fetchall()
     print("izleti so: ",izleti)
     transporti = []
@@ -360,6 +360,7 @@ def priljubljeni_izleti():
         z_imeni.append(posamezni_izlet[0][4]) #trajanje
         z_imeni.append(posamezni_izlet[0][5]) #cena
         z_imeni.append(posamezni_izlet[0][6]) #na voljo
+        z_imeni.append(izleti[i][i]) #id izletak ki ga potrebujemo da lahko latzje dostopamo do izleta in spremenimo potem oceno
     
         transporti.append(z_imeni)
         #print("blabla", transporti)
@@ -367,7 +368,9 @@ def priljubljeni_izleti():
     print("vsi izleti so: ", transporti)
     return bottle.template('priljubljeni_izleti.tpl', napaka = None, oseba = oseb_a, izleti = transporti)
 
-   
+# @post('/priljubljeni_izleti')
+# def pojdi_na_izlet(id_izleta:
+
 
 
 
