@@ -13,11 +13,13 @@
   <thead>
     <tr>
       <th scope="col">#</th>
-      <th scope="col">Država začetka</th>                                        Izpiše izlete kamor so šli ljudje z mojim držvljanstvom.
+      <th scope="col">Država začetka</th>                                        Izpiše moje oprvljene izlete
       <th scope="col">Država konca</th>
       <th scope="col">Prevozno sredstvo</th>
       <th scope="col">Trajanje</th>
       <th scope="col">Cena</th>
+       <th scope="col">Ocena</th>
+
       <th scope="col">Spremeni oceno</th>
     </tr>
   </thead>
@@ -30,6 +32,7 @@
       <td>{{izleti[i][3]}}</td>
       <td>{{izleti[i][4]}}</td>
       <td>{{izleti[i][5]}}</td>
+      <td>{{izleti[i][6]}}</td>
       <td>tu pride sprememba ocene</td>
     </tr>
     %end
