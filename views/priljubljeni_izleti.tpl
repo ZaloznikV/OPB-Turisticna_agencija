@@ -20,7 +20,7 @@
       <th scope="col">Cena</th>
       <th scope="col">Na voljo</th>
        <th scope="col">Pojdi na izlet</th> 
-         <th scope="col">id samo za vzorec - potem pride izbrisano</th>  
+         <th scope="col">id transporta samo za vzorec - potem pride izbrisano</th>  
     </tr>
   </thead>
   <tbody>

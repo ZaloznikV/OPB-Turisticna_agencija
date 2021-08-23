@@ -360,7 +360,7 @@ def priljubljeni_izleti():
         z_imeni.append(posamezni_izlet[0][4]) #trajanje
         z_imeni.append(posamezni_izlet[0][5]) #cena
         z_imeni.append(posamezni_izlet[0][6]) #na voljo
-        z_imeni.append(izleti[i][i]) #id izletak ki ga potrebujemo da lahko latzje dostopamo do izleta in spremenimo potem oceno
+        z_imeni.append(izleti[i][2]) #id transporta ki ga potrebujemo da lahko lazje dostopamo do izleta in ga dodamo če želimo nanj
     
         transporti.append(z_imeni)
         #print("blabla", transporti)
@@ -368,8 +368,21 @@ def priljubljeni_izleti():
     print("vsi izleti so: ", transporti)
     return bottle.template('priljubljeni_izleti.tpl', napaka = None, oseba = oseb_a, izleti = transporti)
 
-# @post('/priljubljeni_izleti')
-# def pojdi_na_izlet(id_izleta:
+@post('/priljubljeni_izleti')
+def priljubljeni_izleti(id_izleta, datum):
+    email = bottle.request.get_cookie('email', default=None, secret=secret)
+    geslo = bottle.request.get_cookie('geslo', default=None, secret=secret)
+    cur.execute("SELECT * FROM osebe WHERE email = %s AND geslo = %s", [email, geslo])
+    oseb_a = cur.fetchone()
+    print("oseba je: ", oseb_a)
+    cur.execute("""
+                INSERT INTO izlet
+                (oseba, transport, datum, ocena)
+                VALUES (%s, %s, %s, %s)
+                RETURNING id
+            """, [oseb_a, id_izleta, datum, 0]) #datum bomo potem spreminjali, ocena na zacetku nic.
+    redirect("/moja_stran") #vrne na mojo stran, manjkajo se gumbi
+    return
 
 
 
