@@ -1,5 +1,5 @@
 %  rebase('base.tpl')
-
+% from bottleext import get, post, run, request, template, redirect, static_file, url
 <figure>
 
   <figcaption><h1 align="center" >REGISTRACIJA</h1></figcaption>
@@ -7,11 +7,11 @@
 </figure>
 
 
-
+% from bottleext import get, post, run, request, template, redirect, static_file, url
 <section class="container-fluid">
   <section class="row justify-content-center">
     <section class="col-12 col-sm-6 col-md-3">
-      <form class="form-container" action="/registracija" method="post">
+      <form class="form-container" action="{{url('/registracija')}}" method="post">
         <div class="mb-3">
           <label for="exampleInputEmail1" class="form-label">Ime</label>
           <input type="text" name="ime" class="form-control" id="prijava" aria-describedby="emailHelp" required>
@@ -44,7 +44,7 @@
         </div>
         <button type="submit" class="btn btn-success col-6 mt-3 mb-5">Registracija</button>
         <button type="reset" class="btn btn-secondary mt-3 mb-5">Ponovno</button> 
-        <p>Si že naročen? <a href="/prijava">Prijavi se </a></p>
+        <p>Si že naročen? <a href="{{url('/prijava')}}">Prijavi se </a></p>
       </form>
     </section>
   </section>

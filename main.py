@@ -67,11 +67,11 @@ def stran_uporabnika():
     if oseba:
         bottle.response.set_cookie('email', email, path='/', secret=secret)
         bottle.response.set_cookie('geslo', geslo, path='/', secret=secret)
-        redirect("/")
+        redirect(url("/"))
         return 
     else:
         bottle.response.set_cookie('napaka', "Email in geslo se ne ujemata.", path='/', secret=secret)
-        redirect("/prijava")
+        redirect(url("/prijava"))
         return
 
     
@@ -81,7 +81,7 @@ def odjava():
     print("odjavljam se")
     bottle.response.set_cookie('email', None, path='/', secret=secret)
     bottle.response.set_cookie('geslo', None, path='/', secret=secret)
-    redirect("/")
+    redirect(url("/"))
     return 
 
 # @get('/prijavljen/')
@@ -115,7 +115,7 @@ def sprememba_gesla():
     if (geslo1 != geslo2):
         # Geslo se ne ujemata
         bottle.response.set_cookie('napaka', 'Gesli se ne ujemata.', path='/', secret=secret)
-        redirect("/pozabljeno_geslo")
+        redirect(url("/pozabljeno_geslo"))
         return
     cur.execute("SELECT * FROM osebe WHERE email = %s", [email])
     oseba = cur.fetchone()
@@ -123,11 +123,11 @@ def sprememba_gesla():
         geslo = password_hash(geslo1)
         cur.execute("UPDATE osebe SET geslo = %s WHERE email = %s", [geslo, email])
         conn.commit()
-        redirect("/spremenjeno_geslo")
+        redirect(url("/spremenjeno_geslo"))
         return
     else:
         bottle.response.set_cookie('napaka', 'Ta email naslov ne obstaja.', path='/', secret=secret)
-        redirect("/pozabljeno_geslo")
+        redirect(url("/pozabljeno_geslo"))
         return
 
 @get('/spremenjeno_geslo')
@@ -160,14 +160,14 @@ def register_post():
     if cur.fetchone():
         # Uporabnik že obstaja
         bottle.response.set_cookie('napaka', 'Ta E-mail že obstaja.', path='/', secret=secret)
-        redirect("/registracija/")
+        redirect(url("/registracija/"))
         return
         # return bottle.template("registracija.tpl", drzave=drzave,
         #                        napaka='Ta E-mail že obstaja', oseba=None)
     elif not geslo1 == geslo2:
         # Geslo se ne ujemata
         bottle.response.set_cookie('napaka', 'Gesli se ne ujemata.', path='/', secret=secret)
-        redirect("/registracija/")
+        redirect(url("/registracija/"))
         return
         # return bottle.template("registracija.tpl", drzave=drzave,
         #                        napaka='Gesli se ne ujemata', oseba=None)
@@ -180,7 +180,7 @@ def register_post():
         # Daj uporabniku cookie
         bottle.response.set_cookie('email', email, path='/', secret=secret)
         bottle.response.set_cookie('geslo', geslo, path='/', secret=secret)
-        bottle.redirect("/")
+        bottle.redirect(url("/"))
         return
 
 @get("/nastavitve")
@@ -222,7 +222,7 @@ def spremeni():
     # drzava = cur.fetchone()
     if (novo_geslo1 != novo_geslo2):
         bottle.response.set_cookie('napaka', 'Gesli se ne ujemata.', path='/', secret=secret)
-        redirect('/nastavitve')
+        redirect(url('/nastavitve'))
         return
         # return bottle.template("nastavitve.tpl", drzava=drzava[0],
         #                        napaka='Gesli se ne ujemata')
@@ -236,7 +236,7 @@ def spremeni():
         cur.execute("SELECT * FROM osebe WHERE email = %s", [nov_email])
         if (cur.fetchone()):
             bottle.response.set_cookie('napaka', 'Email že obstaja.', path='/', secret=secret)
-            redirect('/nastavitve')
+            redirect(url('/nastavitve'))
             return
     if novo_geslo1 == "" or None:
         novo_geslo1 = oseba[5]
@@ -257,7 +257,7 @@ def spremeni():
     bottle.response.set_cookie('geslo', novo_geslo1, path='/', secret=secret)
     # if (nov_email != oseba[4]):
     #     cur.execute(" UPDATE osebe SET email = %s WHERE
-    redirect("/nastavitve")
+    redirect(url("/nastavitve"))
     return
 
 
@@ -269,7 +269,7 @@ def moja_stran():
     oseba = cur.fetchone()
     cur.execute("""
         SELECT izlet.datum, drzave_start.ime, drzave_end.ime, prevoz.prevoz, 
-        mozni_transporti.trajanje, mozni_transporti.cena, izlet.ocena 
+        mozni_transporti.trajanje, mozni_transporti.cena, izlet.ocena, izlet.id 
         FROM izlet
         JOIN mozni_transporti ON izlet.transport = mozni_transporti.id
         JOIN drzave AS drzave_start ON mozni_transporti.drzava_zacetek = drzave_start.id
@@ -282,6 +282,7 @@ def moja_stran():
     for izlet in izleti:
         izlet[0] = boljsi_datum(izlet[0])
     print(izleti)
+    bottle.response.set_cookie('napaka', None, path='/', secret=secret)
     return bottle.template('moja_stran.tpl', napaka = None, oseba = oseba, izleti = izleti)
 
 def boljsi_datum(niz):
@@ -314,6 +315,48 @@ def boljsi_datum(niz):
     else: 
         d[1] = "napaka"
     return d[2] + ". " + d[1] + " " + d[0]
+
+
+@post('/moja_stran/uredi_oceno')
+def najdi_oceno():
+    id_izleta = request.forms.uredi
+    bottle.response.set_cookie('id_izleta', id_izleta, path='/', secret=secret)
+    redirect(url('/moja_stran/uredi_oceno'))
+    return
+
+@get('/moja_stran/uredi_oceno')
+def prikazi_oceno():
+    email = bottle.request.get_cookie('email', default=None, secret=secret)
+    # geslo = bottle.request.get_cookie('geslo', default=None, secret=secret)
+    cur.execute("SELECT * FROM osebe WHERE email = %s", [email])
+    oseba = cur.fetchone()
+    id_izleta = bottle.request.get_cookie('id_izleta', default=None, secret=secret)
+    napaka = bottle.request.get_cookie('napaka', default=None, secret=secret)
+    cur.execute("SELECT ocena FROM izlet WHERE id = %s", [id_izleta])
+    ocena = cur.fetchone()
+    return bottle.template('spremeni_oceno.tpl', napaka = napaka, oseba = oseba, ocena = ocena)
+
+@post('/moja_stran/spremeni_oceno')
+def spremeni_oceno():
+    nova_ocena = request.forms.nova_ocena
+    if (not nova_ocena):
+        bottle.response.set_cookie('napaka', None, path='/', secret=secret)
+        bottle.response.set_cookie('id_izleta', None, path='/', secret=secret)
+        redirect(url('/moja_stran'))
+        return
+    ocena = int(nova_ocena)
+    id_izleta = bottle.request.get_cookie('id_izleta', default=None, secret=secret)
+    if(ocena > 10 or ocena < 1):
+        bottle.response.set_cookie('napaka', 'Ocena mora biti med 1 in 10.', path='/', secret=secret)
+        redirect(url('/moja_stran/uredi_oceno'))
+        return
+    cur.execute("UPDATE izlet SET ocena = %s WHERE id = %s", [ocena, id_izleta])
+    conn.commit()
+    bottle.response.set_cookie('napaka', None, path='/', secret=secret)
+    bottle.response.set_cookie('id_izleta', None, path='/', secret=secret)
+    redirect(url('/moja_stran'))
+    return
+
 
 @get('/izlet')
 def izlet():
@@ -351,7 +394,7 @@ def izlet():
 #         WHERE id = %s""", [izleti[0]])
 #   
 #     conn.commit() 
-# redirect("/moja_stran")
+# redirect(url("/moja_stran")
 #    return
  
 
@@ -422,7 +465,7 @@ def priljubljeni_izleti(id_izleta):
                 VALUES (%s, %s, %s, %s)
                 RETURNING id
             """, [oseb_a[0], id_izleta, trenutni_datum, 0]) # ocena na zacetku nic.
-    redirect("/moja_stran") #vrne na mojo stran, manjkajo se gumbi
+    redirect(url("/moja_stran")) #vrne na mojo stran, manjkajo se gumbi
 
 
     return
@@ -467,7 +510,7 @@ def static(filename):
 #         conn.rollback()
 #         return template('dodaj_transakcijo.html', znesek=znesek, racun=racun, opis=opis,
 #                         napaka='Zgodila se je napaka: %s' % ex)
-#     redirect(url('index'))
+#     redirect(url(url('index'))
 
 ######################################################################
 # Glavni program

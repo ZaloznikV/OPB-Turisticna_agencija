@@ -1,5 +1,5 @@
 %  rebase('base.tpl')
-
+% from bottleext import get, post, run, request, template, redirect, static_file, url
 <figure>
 
   <figcaption><h1 align="center" >Sprememba Podatkov</h1></figcaption>
@@ -11,7 +11,7 @@
 <section class="container-fluid">
   <section class="row justify-content-center">
     <section class="col-12 col-sm-6 col-md-3">
-      <form class="form-container" action="/spremeni" method="post">
+      <form class="form-container" action="{{url('/spremeni')}}" method="post">
         <div class="mb-3">
           <label for="exampleInputEmail1" class="form-label">Novo ime</label>
           <input type="text" name="ime" class="form-control" id="sprememba" aria-describedby="emailHelp" placeholder={{oseba[1]}}>

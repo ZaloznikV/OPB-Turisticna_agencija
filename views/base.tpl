@@ -17,7 +17,7 @@
     <body>
     <nav class="navbar navbar-expand-lg navbar-light" style="background-color: 	#D22B2B;">
     <div class="container-fluid">
-        <a class="navbar-brand" href="/">Turistična agencija</a>
+        <a class="navbar-brand" href="{{url('/')}}">Turistična agencija</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
         </button>
@@ -25,7 +25,7 @@
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item">
         % if (oseba):
-        <a class="nav-link active" aria-current="page" href="/moja_stran">Moja stran</a>
+        <a class="nav-link active" aria-current="page" href="{{url('/moja_stran')}}">Moja stran</a>
         %else:
         <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Moja stran</a>
         %end
@@ -35,10 +35,10 @@
             Izleti
           </a>
           <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <li><a class="dropdown-item" href="#">Pojdi na izlet</a></li>
-            <li><a class="dropdown-item" href="/priljubljeni_izleti">Priljubljeni izleti</a></li>
-            <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="#">Something else here</a></li>
+            <li><a class="dropdown-item" href="{{url('/izlet')}}">Pojdi na izlet</a></li>
+            % if(oseba):
+            <li><a class="dropdown-item" href="{{url('/priljubljeni_izleti')}}">Priljubljeni izleti</a></li>
+            % end
           </ul>
         </li>
       </ul>
@@ -55,11 +55,11 @@
       </form>
       
         % if (oseba):
-            <form class="d-flex mx-2" action="/nastavitve" method="get">
+            <form class="d-flex mx-2" action="{{url('/nastavitve')}}" method="get">
             <button class="btn btn-success" type="submit">Nastavitve</button>
             </form>
         % else:
-            <form class="d-flex mx-2" action="/prijava" method="GET">
+            <form class="d-flex mx-2" action="{{url('/prijava')}}" method="GET">
             <button class="btn btn-success" type="submit">Prijava</button>
             </form>
         % end

@@ -1,5 +1,5 @@
 %  rebase('base.tpl')
-
+% from bottleext import get, post, run, request, template, redirect, static_file, url
 
 
 <figure>
@@ -13,11 +13,11 @@
   <thead>
     <tr>
       <th scope="col">#</th>
-      <th scope="col">Država začetka</th>                                        Izpiše izlete kamor so šli ljudje z mojim držvljanstvom.
-      <th scope="col">Država konca</th>
-      <th scope="col">Prevozno sredstvo</th>
-      <th scope="col">Trajanje</th>
-      <th scope="col">Cena</th>
+      <th scope="col">Od kod</th>                                        Izpiše izlete kamor so šli ljudje z mojim držvljanstvom.
+      <th scope="col">Kam</th>
+      <th scope="col">Prevoz</th>
+      <th scope="col">Trajanje (v urah)</th>
+      <th scope="col">Cena (v evrih)</th>
       <th scope="col">Na voljo</th>
        <th scope="col">Pojdi na izlet</th> 
          <th scope="col">id transporta samo za vzorec - potem pride izbrisano</th>  
@@ -32,9 +32,8 @@
       <td>{{izleti[i][3]}}</td>
       <td>{{izleti[i][4]}}</td>
       <td>{{izleti[i][5]}}</td>
-      <td>{{izleti[i][6]}}</td>
       <td>
-      <form class="d-flex justify-content-end mx-2" action="/priljubljeni_izleti/{{izleti[i][7]}}" method="post">
+      <form class="d-flex justify-content-end mx-2" action="{{url('/priljubljeni_izleti/' + str(izleti[i][7])}}" method="post">
     <button class="btn btn-success" type="submit">Pojdi na izlet</button>
 </form>
       

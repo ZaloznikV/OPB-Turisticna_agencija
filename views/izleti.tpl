@@ -1,5 +1,5 @@
 %  rebase('base.tpl')
-
+% from bottleext import get, post, run, request, template, redirect, static_file, url
 <figure>
 
   <figcaption><h1 align="center" >Pojdi na izlet!</h1></figcaption>
