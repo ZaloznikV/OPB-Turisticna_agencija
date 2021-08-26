@@ -1,5 +1,5 @@
 %  rebase('base.tpl')
-
+% from bottleext import get, post, run, request, template, redirect, static_file, url
 
 
 <figure>
@@ -36,13 +36,13 @@
       % if (izleti[i][6]):
       <td>{{izleti[i][6]}}</td>
       <td>
-        <form action="/moja_stran/uredi_oceno" method="post">
+        <form action="{{url('/moja_stran/uredi_oceno')}}" method="post">
         <button type="submit" name="uredi" value="{{izleti[i][7]}}" class="btn btn-success col-6 mt-3 mb-5">Spremeni Oceno</button>
       </td>
       % else:
       <td>Ta izlet še niste ocenili!</td>
       <td>
-        <form action="/moja_stran/uredi_oceno" method="post">
+        <form action="{{url('/moja_stran/uredi_oceno')}}" method="post">
         <button type="submit" name="uredi" value="{{izleti[i][7]}}" class="btn btn-success col-6 mt-3 mb-5">Oceni</button>
       </td>
       %end
