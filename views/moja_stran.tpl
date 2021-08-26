@@ -42,7 +42,7 @@
       % else:
       <td>Ta izlet še niste ocenili!</td>
       <td>
-        <form action="/moja_stran/uredi_oceno" method="get">
+        <form action="/moja_stran/uredi_oceno" method="post">
         <button type="submit" name="uredi" value="{{izleti[i][7]}}" class="btn btn-success col-6 mt-3 mb-5">Oceni</button>
       </td>
       %end
