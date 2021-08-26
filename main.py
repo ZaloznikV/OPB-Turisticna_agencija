@@ -2,6 +2,7 @@
 # -*- encoding: utf-8 -*-
 import hashlib
 import bottle
+from datetime import datetime #da bo datum izleta današnji datum
 # uvozimo bottle.py
 from bottleext import get, post, run, request, template, redirect, static_file, url
 
@@ -408,8 +409,8 @@ def priljubljeni_izleti():
     print("oseba je: ", oseb_a)
     print("drzvljanstvo osebe je: ", drzavljanstvo_osebe)
 
-    cur.execute("SELECT  * FROM izlet WHERE oseba IN (SELECT id FROM osebe WHERE drzavljanstvo = %s) LIMIT 3", [oseb_a[3]] )
-
+    cur.execute("SELECT  * FROM izlet WHERE oseba IN (SELECT id FROM osebe WHERE drzavljanstvo = %s)  LIMIT 3", [oseb_a[3]] )
+#tukaj se pride AND transport od izleta na voljo = true
     izleti = cur.fetchall()
     print("izleti so: ",izleti)
     transporti = []
@@ -443,20 +444,23 @@ def priljubljeni_izleti():
     print("vsi izleti so: ", transporti)
     return bottle.template('priljubljeni_izleti.tpl', napaka = None, oseba = oseb_a, izleti = transporti)
 
-@post('/priljubljeni_izleti')
-def priljubljeni_izleti(id_izleta, datum):
+@post('/priljubljeni_izleti/<id_izleta>')
+def priljubljeni_izleti(id_izleta):
     email = bottle.request.get_cookie('email', default=None, secret=secret)
     geslo = bottle.request.get_cookie('geslo', default=None, secret=secret)
     cur.execute("SELECT * FROM osebe WHERE email = %s AND geslo = %s", [email, geslo])
     oseb_a = cur.fetchone()
     print("oseba je: ", oseb_a)
+    trenutni_datum = datetime.today().strftime('%Y-%m-%d')
     cur.execute("""
                 INSERT INTO izlet
                 (oseba, transport, datum, ocena)
                 VALUES (%s, %s, %s, %s)
                 RETURNING id
-            """, [oseb_a, id_izleta, datum, 0]) #datum bomo potem spreminjali, ocena na zacetku nic.
+            """, [oseb_a[0], id_izleta, trenutni_datum, 0]) # ocena na zacetku nic.
     redirect("/moja_stran") #vrne na mojo stran, manjkajo se gumbi
+
+
     return
 
 
