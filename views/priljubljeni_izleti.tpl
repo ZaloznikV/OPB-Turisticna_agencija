@@ -19,8 +19,8 @@
       <th scope="col">Trajanje (v urah)</th>
       <th scope="col">Cena (v evrih)</th>
       <th scope="col">Na voljo</th>
-       <th scope="col">Pojdi na izlet</th> 
-         <th scope="col">id transporta samo za vzorec - potem pride izbrisano</th>  
+       <th scope="col"></th> 
+
     </tr>
   </thead>
   <tbody>
@@ -32,14 +32,15 @@
       <td>{{izleti[i][3]}}</td>
       <td>{{izleti[i][4]}}</td>
       <td>{{izleti[i][5]}}</td>
+      <td>{{izleti[i][6]}}</td>
       <td>
       % print("////////////////////////////")
       % print(izleti[i][7])
-      <form class="d-flex justify-content-end mx-2" action="{{url('priljubljeni_izleti_post', izleti[i][7])}}" method="post">
+      <form class="d-flex justify-content-end mx-2" action="{{url('priljubljeni_izleti_post', id_izleta=izleti[i][7])}}" method="post">
         <button class="btn btn-success" type="submit">Pojdi na izlet</button>
       </form>
       </td>
-      <td>{{izleti[i][7]}}</td>
+
 
     </tr>
     %end
