@@ -444,8 +444,8 @@ def priljubljeni_izleti():
     print("vsi izleti so: ", transporti)
     return bottle.template('priljubljeni_izleti.tpl', napaka = None, oseba = oseb_a, izleti = transporti)
 
-@post('/priljubljeni_izleti/<id_izleta>')
-def priljubljeni_izleti(id_izleta):
+@post('/priljubljeni_izleti_post/<id_izleta>')
+def priljubljeni_izleti_post(id_izleta):
     email = bottle.request.get_cookie('email', default=None, secret=secret)
     geslo = bottle.request.get_cookie('geslo', default=None, secret=secret)
     cur.execute("SELECT * FROM osebe WHERE email = %s AND geslo = %s", [email, geslo])

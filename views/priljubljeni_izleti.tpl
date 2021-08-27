@@ -33,10 +33,11 @@
       <td>{{izleti[i][4]}}</td>
       <td>{{izleti[i][5]}}</td>
       <td>
-      <form class="d-flex justify-content-end mx-2" action="{{url('/priljubljeni_izleti/' + str(izleti[i][7])}}" method="post">
-    <button class="btn btn-success" type="submit">Pojdi na izlet</button>
-</form>
-      
+      % print("////////////////////////////")
+      % print(izleti[i][7])
+      <form class="d-flex justify-content-end mx-2" action="{{url('priljubljeni_izleti_post', izleti[i][7])}}" method="post">
+        <button class="btn btn-success" type="submit">Pojdi na izlet</button>
+      </form>
       </td>
       <td>{{izleti[i][7]}}</td>
 
