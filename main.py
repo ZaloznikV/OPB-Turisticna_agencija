@@ -375,29 +375,6 @@ def izlet():
     return bottle.template('izleti.tpl', napaka = None, oseba = oseba, mozni_izleti = mozni_izleti)
 
 
- # @post('/moja_stran')  ????????????????????????????????????????????????????????????
-# def spremeni_oceno():
-
-#     email = bottle.request.get_cookie('email', default=None, secret=secret)
-#     geslo = bottle.request.get_cookie('geslo', default=None, secret=secret)
-#     cur.execute("SELECT * FROM osebe WHERE email = %s AND geslo = %s", [email, geslo])
-#     oseba = cur.fetchone()
-#     cur.execute("SELECT * FROM izlet WHERE oseba = %s", [oseba[0]])
-#     izleti = cur.fetchall()
-
-#     nova_ocena = request.forms.ocena
-#     posamezni_izlet = cur.execute("SELECT * FROM izleti WHERE id = %s", [izleti[0]])
-
-#     cur.execute("""
-#         UPDATE izlet SET
-#          ocena = nova_ocena
-#         WHERE id = %s""", [izleti[0]])
-#   
-#     conn.commit() 
-# redirect(url("/moja_stran")
-#    return
- 
-
 
 @get('/priljubljeni_izleti')
 #ogabno ampak nadaljevanje je bilo narejeno pred poizvedbami in ker je delalo sem potem poizvedbo prilagodil temu.
@@ -410,7 +387,7 @@ def priljubljeni_izleti():
     print("oseba je: ", oseb_a)
     print("drzvljanstvo osebe je: ", drzavljanstvo_osebe)
 
-    #cur.execute("SELECT  * FROM izlet WHERE oseba IN (SELECT id FROM osebe WHERE drzavljanstvo = %s)   LIMIT 3", [oseb_a[3]] )
+
     cur.execute(  """SELECT izlet.*
 FROM izlet
 INNER JOIN osebe ON izlet.oseba=osebe.id AND osebe.drzavljanstvo = %s
@@ -418,7 +395,7 @@ INNER JOIN mozni_transporti ON izlet.transport=mozni_transporti.id AND mozni_tra
 ORDER BY izlet.ocena desc
 LIMIT 3""", [oseb_a[3]] ) #najboljse ocenjeni 3. izleti oseb z istim drzavljanstvom
 
-#tukaj se pride AND transport od izleta na voljo = true
+
     izleti = cur.fetchall()
     print("izleti so: ",izleti)
     transporti = []
@@ -447,8 +424,7 @@ LIMIT 3""", [oseb_a[3]] ) #najboljse ocenjeni 3. izleti oseb z istim drzavljanst
         z_imeni.append(izleti[i][2]) #id transporta ki ga potrebujemo da lahko lazje dostopamo do izleta in ga dodamo če želimo nanj
     
         transporti.append(z_imeni)
-        #print("blabla", transporti)
-        #treba se iz stevilk dobiti dejanske vrednosti in potem preurediti seznam da bo v njem vse za pisanje in potem spremeniti se tpl za izris vecjega seznama
+       
     print("vsi izleti so: ", transporti)
     return bottle.template('priljubljeni_izleti.tpl', napaka = None, oseba = oseb_a, izleti = transporti)
 
@@ -466,7 +442,7 @@ def priljubljeni_izleti_post(id_izleta):
                 VALUES (%s, %s, %s, %s)
                 RETURNING id
             """, [oseb_a[0], id_izleta, trenutni_datum, 0]) # ocena na zacetku nic.
-    redirect(url("/moja_stran")) #vrne na mojo stran, manjkajo se gumbi
+    redirect(url("/moja_stran")) #vrne na mojo stran
 
 
     return
