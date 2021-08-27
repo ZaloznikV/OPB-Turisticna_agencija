@@ -400,6 +400,7 @@ def izlet():
 
 
 @get('/priljubljeni_izleti')
+#ogabno ampak nadaljevanje je bilo narejeno pred poizvedbami in ker je delalo sem potem poizvedbo prilagodil temu.
 def priljubljeni_izleti():
     email = bottle.request.get_cookie('email', default=None, secret=secret)
     geslo = bottle.request.get_cookie('geslo', default=None, secret=secret)
@@ -409,7 +410,14 @@ def priljubljeni_izleti():
     print("oseba je: ", oseb_a)
     print("drzvljanstvo osebe je: ", drzavljanstvo_osebe)
 
-    cur.execute("SELECT  * FROM izlet WHERE oseba IN (SELECT id FROM osebe WHERE drzavljanstvo = %s)  LIMIT 3", [oseb_a[3]] )
+    #cur.execute("SELECT  * FROM izlet WHERE oseba IN (SELECT id FROM osebe WHERE drzavljanstvo = %s)   LIMIT 3", [oseb_a[3]] )
+    cur.execute(  """SELECT izlet.*
+FROM izlet
+INNER JOIN osebe ON izlet.oseba=osebe.id AND osebe.drzavljanstvo = %s
+INNER JOIN mozni_transporti ON izlet.transport=mozni_transporti.id AND mozni_transporti.na_voljo=true
+ORDER BY izlet.ocena desc
+LIMIT 3""", [oseb_a[3]] ) #najboljse ocenjeni 3. izleti oseb z istim drzavljanstvom
+
 #tukaj se pride AND transport od izleta na voljo = true
     izleti = cur.fetchall()
     print("izleti so: ",izleti)
