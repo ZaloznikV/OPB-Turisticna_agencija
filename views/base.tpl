@@ -43,13 +43,20 @@
         </li>
       </ul>
        
-   
-      
+        % if(oseba):
+            <div class="col-lg-5">
+            <h1> Pozdravljeni {{oseba[1]}} {{oseba[2]}} </h1>
+            </div>
+        %end
 
+      <form class="d-flex">
+        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+        <button class="btn btn-outline-success" type="submit">Search</button>
+      </form>
       
         % if (oseba):
             <form class="d-flex mx-2" action="{{url('/nastavitve')}}" method="get">
-            <button class="btn btn-success" type="submit">{{oseba[1]}} {{oseba[2]}}</button>
+            <button class="btn btn-success" type="submit">Nastavitve</button>
             </form>
         % else:
             <form class="d-flex mx-2" action="{{url('/prijava')}}" method="GET">

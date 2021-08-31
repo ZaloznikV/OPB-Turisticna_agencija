@@ -365,7 +365,7 @@ def izlet():
     cur.execute("SELECT * FROM osebe WHERE email = %s", [email])
     oseba = cur.fetchone()
     cur.execute("""
-        SELECT drzave_start.ime, drzave_end.ime, prevoz.prevoz, trajanje, cena FROM mozni_transporti
+        SELECT drzave_start.ime, drzave_end.ime, prevoz.prevoz, trajanje, cena, mozni_transporti.id FROM mozni_transporti
         JOIN drzave AS drzave_start ON mozni_transporti.drzava_zacetek = drzave_start.id
         JOIN drzave AS drzave_end ON mozni_transporti.drzava_konec = drzave_end.id
         JOIN prevoz ON mozni_transporti.prevoz = prevoz.id
@@ -374,7 +374,24 @@ def izlet():
     mozni_izleti = cur.fetchall()
     return bottle.template('izleti.tpl', napaka = None, oseba = oseba, mozni_izleti = mozni_izleti)
 
+@post('/izleti_post/<id_izleta>')
+def izleti_post(id_izleta):
+    email = bottle.request.get_cookie('email', default=None, secret=secret)
+    geslo = bottle.request.get_cookie('geslo', default=None, secret=secret)
+    cur.execute("SELECT * FROM osebe WHERE email = %s AND geslo = %s", [email, geslo])
+    oseb_a = cur.fetchone()
+    print("oseba je: ", oseb_a)
+    trenutni_datum = datetime.today().strftime('%Y-%m-%d')
+    cur.execute("""
+                INSERT INTO izlet
+                (oseba, transport, datum, ocena)
+                VALUES (%s, %s, %s, %s)
+                RETURNING id
+            """, [oseb_a[0], id_izleta, trenutni_datum, 0]) # ocena na zacetku nic.
+    redirect(url("/moja_stran")) #vrne na mojo stran
 
+
+    return
 
 @get('/priljubljeni_izleti')
 #ogabno ampak nadaljevanje je bilo narejeno pred poizvedbami in ker je delalo sem potem poizvedbo prilagodil temu.
@@ -446,6 +463,8 @@ def priljubljeni_izleti_post(id_izleta):
 
 
     return
+
+
 
 
 

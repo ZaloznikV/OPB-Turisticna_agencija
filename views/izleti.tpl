@@ -23,10 +23,16 @@
   % for i in range(len(mozni_izleti)):
     <tr>
       <th scope="row">{{i+1}}</th>
-      % for j in range(len(mozni_izleti[0])):
+      % for j in range(len(mozni_izleti[0])-1):
         <td>{{mozni_izleti[i][j]}}</td>
       %end
-      <td></td>
+     <td>
+      % print("////////////////////////////")
+      % print(mozni_izleti[i][5])
+      <form class="d-flex justify-content-end mx-2" action="{{url('izleti_post', id_izleta=mozni_izleti[i][5])}}" method="post">
+        <button class="btn btn-success" type="submit">Pojdi na izlet</button>
+      </form>
+      </td>
     </tr>
     %end
   </tbody>
