@@ -7,18 +7,18 @@
   <figcaption><h1 align="center" >Priljubljeni izleti</h1></figcaption>
 
 </figure>
-
+<h4> Te izlete vam priporočamo: </h4>
 % if (izleti):
 <table class="table">
   <thead>
     <tr>
       <th scope="col">#</th>
-      <th scope="col">Od kod</th>                                        Izpiše izlete kamor so šli ljudje z mojim držvljanstvom.
+      <th scope="col">Od kod</th>                                        
       <th scope="col">Kam</th>
       <th scope="col">Prevoz</th>
       <th scope="col">Trajanje (v urah)</th>
       <th scope="col">Cena (v evrih)</th>
-      <th scope="col">Na voljo</th>
+
        <th scope="col"></th> 
 
     </tr>
@@ -32,7 +32,7 @@
       <td>{{izleti[i][3]}}</td>
       <td>{{izleti[i][4]}}</td>
       <td>{{izleti[i][5]}}</td>
-      <td>{{izleti[i][6]}}</td>
+
       <td>
       % print("////////////////////////////")
       % print(izleti[i][7])

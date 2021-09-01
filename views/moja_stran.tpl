@@ -7,7 +7,7 @@
   <figcaption><h1 align="center" >Moja stran</h1></figcaption>
 
 </figure>
-
+<h4> Na teh izletih ste že bili: </h4>
 % if (izleti):
 <table class="table">
   <thead>

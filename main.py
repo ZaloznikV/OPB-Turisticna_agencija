@@ -276,6 +276,7 @@ def moja_stran():
         JOIN drzave AS drzave_end ON mozni_transporti.drzava_konec = drzave_end.id
         JOIN prevoz ON mozni_transporti.prevoz = prevoz.id
         WHERE izlet.oseba = %s 
+        ORDER BY izlet.datum DESC
     """, [oseba[0]])
     # cur.execute("SELECT * FROM izlet WHERE oseba = %s", [oseba[0]])
     izleti = cur.fetchall()

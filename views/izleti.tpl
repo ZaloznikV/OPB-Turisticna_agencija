@@ -5,7 +5,7 @@
   <figcaption><h1 align="center" >Pojdi na izlet!</h1></figcaption>
 
 </figure>
-
+<h4> Seznam vseh izletov: </h4>
 % if (mozni_izleti):
 <table class="table">
   <thead>
@@ -29,9 +29,15 @@
      <td>
       % print("////////////////////////////")
       % print(mozni_izleti[i][5])
+      % if(oseba):
       <form class="d-flex justify-content-end mx-2" action="{{url('izleti_post', id_izleta=mozni_izleti[i][5])}}" method="post">
         <button class="btn btn-success" type="submit">Pojdi na izlet</button>
       </form>
+      % else: 
+      <form class="d-flex justify-content-end mx-2" action="{{url('/prijava')}}" method="get">
+        <button class="btn btn-success" type="submit">Prijava</button>
+      </form>
+      %end
       </td>
     </tr>
     %end
